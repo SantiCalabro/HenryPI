@@ -9,7 +9,7 @@ module.exports = sequelize => {
 
   sequelize.define("Raza", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
       set(value) {
         this.setDataValue("id", hash(value));
@@ -28,17 +28,16 @@ module.exports = sequelize => {
       allowNull: false,
     },
     yearsOfLife: {
-      type: DataTypes.INTEGER(2),
-    },
-  });
-
-  sequelize.define("Temperamento", {
-    id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
     },
   });
+  // const perro = await Raza.create({
+  //   id: 1,
+  //   name: "Boby",
+  //   height: 30.5,
+  //   weight: 10.5,
+  //   yearsOfLife: 10,
+  // });
+
+  // console.log(perro);
 };
