@@ -1,5 +1,7 @@
 const initialState = {
-  loadedDogs: [],
+  showDogs: [],
+  filteredDogs: [],
+  dogDetail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -7,7 +9,29 @@ function rootReducer(state = initialState, action) {
     case "SHOW_DOGS":
       return {
         ...state,
-        loadedDogs: action.payload,
+        showDogs: action.payload,
+      };
+    case "SHOW_DETAIL":
+      return {
+        ...state,
+        showDogs: action.payload,
+      };
+
+    case "GET_FILTERED":
+      return {
+        ...state,
+        filteredDogs: action.payload,
+      };
+    case "CREATE_DOG":
+      return {
+        ...state,
+        showDogs: [...state.showDogs, ...action.payload],
+      };
+
+    case "CLEAR_DOGS":
+      return {
+        ...state,
+        showDogs: {},
       };
     default:
       return state;

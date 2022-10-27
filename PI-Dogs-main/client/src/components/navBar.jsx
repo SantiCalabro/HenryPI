@@ -6,7 +6,7 @@ export default function navBar() {
   return (
     <div>
       <div className={N.container}>
-        <h1 className={N.title}>DogFinder</h1>
+        <h1 className={N.title}>Paws&Tails</h1>
         <SearchBar />
       </div>
     </div>

@@ -1,0 +1,20 @@
+body{
+    background: rgb(177, 138, 141);
+    background: linear-gradient(28deg, rgba(234,195,198,0.6587009803921569) 43%, rgb(248, 234, 234) 100%);
+}
+
+.dogImage{
+    height:500px;
+    position: fixed;
+    left: 0px; 
+    top:200px;
+}
+.headerContainer{
+    height: 500px;
+    overflow: hidden;
+    position:fixed;
+    display: block;
+}
+.header{
+    width: 100%;
+}

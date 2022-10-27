@@ -1,19 +1,51 @@
 .container{
     text-align: left;
     margin-left: 50px;
-    margin-top: 30px;
+    top:150px;
+    display: block;
+    width: 11%;
+    height: 20%;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    font-size: 20px;
+    color: #dd3f2a;
+    text-transform: uppercase;
+    font-weight: 800;
+    
+}
+.input{
+    margin-top: 5px;
+    border: none;
+    border-bottom: 1px solid #dd3f2a;
+    background-color: transparent;
 }
 
-.input{
-    margin-top: 10px;
-    
-    
-}
-.input input{
-    border: none;
-    border-bottom: 1px solid #e63946;
-}
 
 .input input::placeholder{
     color:#e63946;
+}
+.btnContainer{
+    width: 165px;
+    background-color: #58a4b0;
+    margin-top: 15px;
+    text-align: center;
+    padding-bottom: 2px;
+    cursor: pointer;
+}
+
+.filterBtn{
+    position: relative;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+}
+
+.btnContainer:hover{
+ background-color: #e63946;
+ transition: 0.1s ease-in-out;
 }

@@ -7,37 +7,52 @@ module.exports = sequelize => {
     return value + "db";
   };
 
-  sequelize.define("Raza", {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-      set(value) {
-        this.setDataValue("id", hash(value));
+  sequelize.define(
+    "Raza",
+    {
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+        set(value) {
+          this.setDataValue("id", hash(value));
+        },
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      breedGroup: {
+        type: DataTypes.STRING,
+      },
+      temperament: {
+        type: DataTypes.STRING,
+      },
+      yearsOfLife: {
+        type: DataTypes.STRING,
+      },
+      minHeight: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      maxHeight: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      minWeight: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      maxWeight: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        },
       },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    height: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    weight: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    yearsOfLife: {
-      type: DataTypes.INTEGER,
-    },
-  });
-  // const perro = await Raza.create({
-  //   id: 1,
-  //   name: "Boby",
-  //   height: 30.5,
-  //   weight: 10.5,
-  //   yearsOfLife: 10,
-  // });
-
-  // console.log(perro);
+    { timestamps: false }
+  );
 };
