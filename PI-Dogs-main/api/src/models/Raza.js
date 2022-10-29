@@ -24,9 +24,6 @@ module.exports = sequelize => {
       breedGroup: {
         type: DataTypes.STRING,
       },
-      temperament: {
-        type: DataTypes.STRING,
-      },
       yearsOfLife: {
         type: DataTypes.STRING,
       },

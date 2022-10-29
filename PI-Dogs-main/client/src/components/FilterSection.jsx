@@ -4,17 +4,30 @@ import { getFiltered } from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function FilterSection() {
-  const [breed, setBreed] = useState("");
+  // const [breed, setBreed] = useState("");
+  const [input, setInput] = useState({
+    breed: "",
+    temperament: "",
+  });
+
   const dogs = useSelector(state => state.showDogs);
+  const temperaments = useSelector(state => state.showTemperaments);
+
   const dispatch = useDispatch();
+
   function handleChange(e) {
-    setBreed(e.target.value);
+    setInput({ ...input, [e.target.name]: e.target.value });
+  }
+  function handleFilterTemp(e) {
+    console.log(e.target.value);
+    const arr = dogs.filter(el => el.temperament.includes(e.target.value));
+    console.log(arr);
+    dispatch(getFiltered(arr));
   }
 
   function handleSubmit(e) {
-    const arr = dogs.filter(el => el.breedGroup === breed);
-    console.log(arr);
     e.preventDefault();
+    const arr = dogs.filter(el => el.breedGroup === input.breed);
     dispatch(getFiltered(arr));
   }
 
@@ -27,11 +40,26 @@ export default function FilterSection() {
             type="text"
             placeholder="Breed group"
             className={F.input}
-            value={breed}
+            value={input.breed}
+            name="breed"
             onChange={e => handleChange(e)}
           />
-          <input type="text" placeholder="Temperament" className={F.input} />
+          <label className={F.input}>Temperament</label>
 
+          <select
+            name="temperament"
+            id="temp"
+            onChange={e => handleFilterTemp(e)}
+            defaultValue={"DEFAULT"}
+          >
+            <option value="DEFAULT" disabled>
+              Select an Option
+            </option>
+            {temperaments &&
+              temperaments.map(el => {
+                return <option key={el.id}>{el.name}</option>;
+              })}
+          </select>
           <div className={F.btnContainer}>
             <input type="submit" placeholder="Filter" className={F.filterBtn} />
           </div>

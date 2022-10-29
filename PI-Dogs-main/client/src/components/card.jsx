@@ -13,7 +13,11 @@ export default function card(props) {
           <div className={Card.dataContainer}>
             <h4 className={Card.raceTitle}>{props.name}</h4>
             <div className={Card.temperamentContainer}>
-              <p className={Card.temperament}>{props.temperament}</p>
+              <p className={Card.temperament}>
+                {props.temperament.length > 3
+                  ? props.temperament.slice(0, 3)
+                  : props.temperament}
+              </p>
             </div>
           </div>
           <span className={Card.spanBtn}>See more</span>

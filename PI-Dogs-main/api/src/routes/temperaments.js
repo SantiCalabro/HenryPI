@@ -1,11 +1,10 @@
 const { Router } = require("express");
-const { Temperamento } = require("../db.js");
+const { Temperament } = require("../db.js");
 const axios = require("axios");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  let dbTemper = await Temperamento.findAll();
-
+  let dbTemper = await Temperament.findAll();
   if (dbTemper.length) {
     return res.send(dbTemper);
   } else {
@@ -15,14 +14,23 @@ router.get("/", async (req, res) => {
     let arr = joinedTemps.split(",");
 
     arr.forEach(async e => {
-      await Temperamento.findOrCreate({ where: { name: e } });
-      //  console.log("Si");
+      await Temperament.findOrCreate({ where: { name: e } });
     });
-    let find = await Temperamento.findAll();
-    // const find = await Temperamento.create({ name: "Prueba" });
-    // console.log(Temperamento);
+    let find = await Temperament.findAll();
     res.send(find);
   }
+
+  router.get("/filter/:temp", async (req, res) => {
+    let { temp } = req.query;
+
+    const apiDogs = await apiData();
+    const dbDogs = await dbData();
+    const concatDogs = apiDogs.concat(dbDogs);
+
+    const filter = concatDogs.filter(el => el.temperament == temp);
+    if (filter.length) return res.status(200).json(filter);
+    else return res.status(404).send("No hay temperamento");
+  });
 });
 
 module.exports = router;
