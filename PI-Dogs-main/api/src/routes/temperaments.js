@@ -12,11 +12,20 @@ router.get("/", async (req, res) => {
     let mappedTemps = apiTemper.data.map(el => el.temperament);
     let joinedTemps = mappedTemps.join();
     let arr = joinedTemps.split(",");
+    let corrected = arr.map(el => (el[0] === " " ? el.slice(1) : el));
 
-    arr.forEach(async e => {
-      await Temperament.findOrCreate({ where: { name: e } });
-    });
+    ///ACÁ TENÉS QUE CREAR LOS TEMPERAMENTOS
+    corrected.map(el =>
+      el.length > 0
+        ? Temperament.findOrCreate({
+            where: {
+              name: el,
+            },
+          })
+        : el
+    );
     let find = await Temperament.findAll();
+
     res.send(find);
   }
 

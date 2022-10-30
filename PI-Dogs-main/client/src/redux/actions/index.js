@@ -13,6 +13,14 @@ export const showTemperaments = () => dispatch => {
     });
 };
 
+export const showBreeds = () => dispatch => {
+  return fetch("http://localhost:3001/breeds")
+    .then(res => res.json())
+    .then(res => {
+      dispatch({ type: "SHOW_BREEDS", payload: res });
+    });
+};
+
 export const showDetail = id => dispatch => {
   return fetch(`http://localhost:3001/dogs/${id}`)
     .then(res => res.json())

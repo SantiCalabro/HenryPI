@@ -14,9 +14,12 @@ export default function card(props) {
             <h4 className={Card.raceTitle}>{props.name}</h4>
             <div className={Card.temperamentContainer}>
               <p className={Card.temperament}>
-                {props.temperament.length > 3
-                  ? props.temperament.slice(0, 3)
+                {props.temperament
+                  ? props.temperament.slice(0, 3) + " "
                   : props.temperament}
+              </p>
+              <p>
+                {props.minYearsOfLife} - {props.maxYearsOfLife} years
               </p>
             </div>
           </div>

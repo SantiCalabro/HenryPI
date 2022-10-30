@@ -13,13 +13,14 @@ const apiData = async () => {
         name: el.name,
         breedGroup: el.breed_group,
         temperament: el.temperament
-          ? el.temperament.split(",")
+          ? el.temperament.split(", ")
           : "No temperaments",
-        yearsOfLife: el.life_span,
-        minWeight: el.weight.imperial.split("-")[0],
-        maxWeight: el.weight.imperial.split("-")[1],
-        minHeight: el.height.imperial.split("-")[0],
-        maxHeight: el.height.imperial.split("-")[1],
+        minYearsOfLife: parseInt(el.life_span.slice(0, 2)),
+        maxYearsOfLife: parseInt(el.life_span.slice(5, 7)),
+        minWeight: parseInt(el.weight.imperial.slice(0, 1)),
+        maxWeight: parseInt(el.weight.imperial.slice(5, 7)),
+        minHeight: parseInt(el.height.imperial.slice(0, 1)),
+        maxHeight: parseInt(el.height.imperial.slice(5, 7)),
         image: el.image.url,
       };
     });
@@ -82,7 +83,8 @@ router.post("/", async (req, res) => {
     maxHeight,
     minWeight,
     maxWeight,
-    yearsOfLife,
+    minYearsOfLife,
+    maxYearsOfLife,
     breedGroup,
     temperaments,
   } = req.body;
@@ -93,7 +95,7 @@ router.post("/", async (req, res) => {
     !maxHeight ||
     !minWeight ||
     !maxWeight ||
-    !yearsOfLife ||
+    // !mearsOfLife ||
     !breedGroup ||
     !temperaments
   ) {
@@ -106,7 +108,8 @@ router.post("/", async (req, res) => {
       maxHeight,
       minWeight,
       maxWeight,
-      yearsOfLife,
+      minYearsOfLife,
+      maxYearsOfLife,
       breedGroup,
       image,
     });

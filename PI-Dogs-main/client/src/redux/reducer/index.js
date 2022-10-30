@@ -3,6 +3,7 @@ const initialState = {
   filteredDogs: [],
   dogDetail: {},
   showTemperaments: [],
+  showBreeds: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -16,6 +17,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         showDogs: action.payload,
+      };
+    case "SHOW_BREEDS":
+      return {
+        ...state,
+        showBreeds: action.payload,
       };
     case "SHOW_TEMPS":
       return {

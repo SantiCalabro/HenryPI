@@ -23,7 +23,7 @@ export default function DogDetail(props) {
         maxHeight={dogs[0].maxHeight}
         minWeight={dogs[0].minWeight}
         maxWeight={dogs[0].maxWeight}
-        yearsOfLife={dogs[0].yearsOfLife}
+        // yearsOfLife={dogs[0].yearsOfLife}
       />
     </div>
   );

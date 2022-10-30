@@ -13,7 +13,7 @@ export default function Detail(props) {
       <h1 className={D.title}>{props.maxHeight}</h1>
       <h1 className={D.title}>{props.minWeight}</h1>
       <h1 className={D.title}>{props.maxWeight}</h1>
-      <h1 className={D.title}>{props.yearsOfLife}</h1>
+      {/* <h1 className={D.title}>{props.yearsOfLife}</h1> */}
     </div>
   );
 }

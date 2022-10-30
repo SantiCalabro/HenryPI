@@ -18,6 +18,8 @@ export default function Cards(props) {
               image={el.image}
               temperament={el.temperament}
               id={el.id}
+              minYearsOfLife={el.minYearsOfLife}
+              maxYearsOfLife={el.maxYearsOfLife}
             />
           </div>
         ))}

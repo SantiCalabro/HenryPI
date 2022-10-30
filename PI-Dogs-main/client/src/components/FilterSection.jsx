@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import F from "../styles/FilterSection.module.css";
-import { getFiltered } from "../redux/actions/index";
+import { getFiltered, showDogs } from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function FilterSection() {
@@ -19,10 +19,9 @@ export default function FilterSection() {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   function handleFilterTemp(e) {
-    console.log(e.target.value);
-    const arr = dogs.filter(el => el.temperament.includes(e.target.value));
-    console.log(arr);
-    dispatch(getFiltered(arr));
+    const filter = dogs.filter(el => el.temperament.includes(e.target.value));
+
+    dispatch(getFiltered(filter));
   }
 
   function handleSubmit(e) {
@@ -52,8 +51,8 @@ export default function FilterSection() {
             onChange={e => handleFilterTemp(e)}
             defaultValue={"DEFAULT"}
           >
-            <option value="DEFAULT" disabled>
-              Select an Option
+            <option value="DEFAULT" onChange={dispatch(showDogs())}>
+              Select an option
             </option>
             {temperaments &&
               temperaments.map(el => {
