@@ -24,7 +24,7 @@ const apiData = async () => {
         image: el.image.url,
       };
     });
-
+    // console.log(dogs);
     return dogs;
   } catch (e) {
     console.log(e);

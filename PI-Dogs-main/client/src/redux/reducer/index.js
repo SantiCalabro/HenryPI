@@ -16,7 +16,7 @@ function rootReducer(state = initialState, action) {
     case "SHOW_DETAIL":
       return {
         ...state,
-        showDogs: action.payload,
+        dogDetail: action.payload,
       };
     case "SHOW_BREEDS":
       return {
@@ -44,7 +44,12 @@ function rootReducer(state = initialState, action) {
     case "CLEAR_DOGS":
       return {
         ...state,
-        showDogs: {},
+        showDogs: [],
+      };
+    case "CLEAR_DETAIL":
+      return {
+        ...state,
+        dogDetail: [],
       };
     default:
       return state;

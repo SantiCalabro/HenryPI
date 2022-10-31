@@ -10,7 +10,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      {/* <NavBar /> */}
       <BrowserRouter>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />

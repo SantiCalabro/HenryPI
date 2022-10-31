@@ -51,7 +51,7 @@ export default function FilterSection() {
             onChange={e => handleFilterTemp(e)}
             defaultValue={"DEFAULT"}
           >
-            <option value="DEFAULT" onChange={dispatch(showDogs())}>
+            <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
               Select an option
             </option>
             {temperaments &&

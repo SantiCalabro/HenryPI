@@ -20,25 +20,25 @@ module.exports = sequelize => {
         type: DataTypes.STRING,
       },
       minYearsOfLife: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
       },
       maxYearsOfLife: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
       },
       minHeight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       maxHeight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       minWeight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       maxWeight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       image: {

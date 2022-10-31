@@ -5,6 +5,13 @@ export const showDogs = () => dispatch => {
       dispatch({ type: "SHOW_DOGS", payload: res });
     });
 };
+export const showDetail = id => dispatch => {
+  return fetch(`http://localhost:3001/dogs/${id}`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({ type: "SHOW_DETAIL", payload: res });
+    });
+};
 export const showTemperaments = () => dispatch => {
   return fetch("http://localhost:3001/temperaments")
     .then(res => res.json())
@@ -21,14 +28,10 @@ export const showBreeds = () => dispatch => {
     });
 };
 
-export const showDetail = id => dispatch => {
-  return fetch(`http://localhost:3001/dogs/${id}`)
-    .then(res => res.json())
-    .then(res => {
-      dispatch({ type: "SHOW_DETAIL", payload: res });
-    });
-};
-
 export const getFiltered = payload => {
   return { type: "GET_FILTERED", payload };
+};
+
+export const clearDetail = () => {
+  return { type: "CLEAR_DETAIL" };
 };
