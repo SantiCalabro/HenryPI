@@ -1,13 +1,17 @@
-.tagContainer{
-   margin-right: 10px;
-   border: 1px solid black;
-   width: 130px;
-   height: 30px;
-   text-align: left;
-   border-radius: 30px;
-   margin-top: 10px;
+*{
+    margin: 0 auto;
+    padding: 0 auto;
+    box-sizing: border-box;
 }
-.check{
+.tagContainer{
+   border: 1px solid black;
+   border-radius: 20px;
+   margin-top: 10px;
+   cursor: pointer;
+   padding: 8px;
+
+}
+.tag{
     margin-left: 8px;
-    margin-top:5px;
+    display: flex;
 }

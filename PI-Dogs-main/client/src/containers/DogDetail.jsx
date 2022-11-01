@@ -2,8 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { showDetail, clearDetail } from "../redux/actions";
 
-// import { useParams } from "react-router-dom";
-
 export default function DogDetail(props) {
   const dispatch = useDispatch();
   const dog = useSelector(state => state.dogDetail);

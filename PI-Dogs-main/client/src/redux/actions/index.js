@@ -1,3 +1,4 @@
+import axios from "axios";
 export const showDogs = () => dispatch => {
   return fetch("http://localhost:3001/dogs")
     .then(res => res.json())
@@ -26,6 +27,15 @@ export const showBreeds = () => dispatch => {
     .then(res => {
       dispatch({ type: "SHOW_BREEDS", payload: res });
     });
+};
+
+export const postDog = payload => async dispatch => {
+  try {
+    const res = await axios.post("http://localhost:3001/dogs", payload);
+    return dispatch({ type: "POST_DOG", payload: res.data });
+  } catch {
+    return console.log(payload);
+  }
 };
 
 export const getFiltered = payload => {

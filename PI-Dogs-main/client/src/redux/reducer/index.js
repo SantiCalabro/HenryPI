@@ -4,6 +4,7 @@ const initialState = {
   dogDetail: {},
   showTemperaments: [],
   showBreeds: [],
+  created: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -39,6 +40,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         showDogs: [...state.showDogs, ...action.payload],
+      };
+    case "POST_DOGS":
+      return {
+        ...state,
+        created: action.payload,
       };
 
     case "CLEAR_DOGS":

@@ -14,6 +14,7 @@ export default function FormContainer() {
   React.useEffect(() => {
     dispatch(showTemperaments());
   }, []);
+
   return (
     <div>
       <div className={FM.formContainer}>

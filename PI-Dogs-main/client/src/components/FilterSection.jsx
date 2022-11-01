@@ -19,7 +19,11 @@ export default function FilterSection() {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   function handleFilterTemp(e) {
-    const filter = dogs.filter(el => el.temperament.includes(e.target.value));
+    const filter = dogs.filter(el =>
+      el.temperament.length > 0
+        ? el.temperament.includes(e.target.value)
+        : "no hay nada"
+    );
 
     dispatch(getFiltered(filter));
   }

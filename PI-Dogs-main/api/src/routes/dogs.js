@@ -101,27 +101,32 @@ router.post("/", async (req, res) => {
   ) {
     res.status(400).json("Faltan datos");
   } else {
-    const dog = await Raza.create({
-      id,
-      name,
-      minHeight,
-      maxHeight,
-      minWeight,
-      maxWeight,
-      minYearsOfLife,
-      maxYearsOfLife,
-      breedGroup,
-      image,
-    });
+    try {
+      const dog = await Raza.create({
+        id,
+        name,
+        minHeight,
+        maxHeight,
+        minWeight,
+        maxWeight,
+        minYearsOfLife,
+        maxYearsOfLife,
+        breedGroup,
+        image,
+      });
 
-    let temp = await Temperament.findAll({
-      where: {
-        name: temperaments,
-      },
-    });
+      let temp = await Temperament.findAll({
+        where: {
+          name: temperaments,
+        },
+      });
 
-    await dog.addTemperament(temp);
-    res.status(200).json(dog);
+      await dog.addTemperament(temp);
+      console.log("Created!");
+      res.status(200).json(dog);
+    } catch (e) {
+      console.log(e);
+    }
   }
 });
 

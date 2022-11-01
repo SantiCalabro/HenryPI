@@ -4,6 +4,7 @@
     display: flex;
     width: 90%;
     overflow-x: hidden;
+
 }
 .tags{
     margin-top: 10px;
@@ -11,6 +12,7 @@
     width: 95%;
     flex-wrap: wrap;
     height: 300px;
+    align-items: left;
 }
 .NameAndBreed{
     margin-top: 30px;
@@ -22,17 +24,33 @@
     margin-top: 30px;
     margin-bottom: 30px;
     float: right;
+  
 }
 .CheckCont input{
-    width: 25px;
+    width: 50px;
 }
 .url{
     position: relative;
     top: 30px;
+    width: 200px;
 }
 
 .tempTitle{
     position: relative;
     right: 320px;
     top: 100px;
+  
 }
+
+.tagContainer{
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 8px;
+ 
+ }
+ .tag{
+     margin-left: 8px;
+     display: flex;
+ }

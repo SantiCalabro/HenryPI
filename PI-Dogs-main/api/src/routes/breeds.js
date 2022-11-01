@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
   });
 
   const allBreeds = await Breeds.findAll();
-  console.log(allBreeds);
+
   res.send(allBreeds);
 });
 
