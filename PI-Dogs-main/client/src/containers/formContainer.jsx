@@ -1,8 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Form from "../components/Form";
 import { showBreeds, showTemperaments } from "../redux/actions";
 import FM from "../styles/formContainer.module.css";
+import HeaderCreate from "../components/HeaderCreate";
 
 export default function FormContainer() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function FormContainer() {
       <div className={FM.formContainer}>
         <Form />
       </div>
+      <HeaderCreate />
     </div>
   );
 }

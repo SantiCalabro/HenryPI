@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import F from "../styles/FilterSection.module.css";
-import { getFiltered, showDogs } from "../redux/actions/index";
+import { getFiltered, showDogs, showBreeds } from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
+import filter from "../statics/filter.png";
 
 export default function FilterSection() {
   // const [breed, setBreed] = useState("");
@@ -11,13 +12,19 @@ export default function FilterSection() {
   });
 
   const dogs = useSelector(state => state.showDogs);
+  const breeds = useSelector(state => state.showBreeds);
+
   const temperaments = useSelector(state => state.showTemperaments);
 
   const dispatch = useDispatch();
 
-  function handleChange(e) {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  }
+  // function validate(input) {
+  //   let errors = {};
+  // }
+
+  // function handleChange(e) {
+  //   setInput({ ...input, [e.target.name]: e.target.value });
+  // }
   function handleFilterTemp(e) {
     const filter = dogs.filter(el =>
       el.temperament.length > 0
@@ -28,44 +35,55 @@ export default function FilterSection() {
     dispatch(getFiltered(filter));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const arr = dogs.filter(el => el.breedGroup === input.breed);
-    dispatch(getFiltered(arr));
+  function handleFilterBreed(e) {
+    // console.log(e.target.value)
+    const filter = dogs.filter(el => el.breedGroup == e.target.value);
+    console.log(filter);
+    dispatch(getFiltered(filter));
   }
 
+  React.useEffect(() => {
+    dispatch(showBreeds());
+  }, []);
   return (
     <div>
       <div className={F.container}>
-        <h4 className={F.title}>Filter by:</h4>
-        <form onSubmit={e => handleSubmit(e)}>
-          <input
-            type="text"
-            placeholder="Breed group"
-            className={F.input}
-            value={input.breed}
+        <img src={filter} className={F.filterLabel} />
+        <form>
+          <select
             name="breed"
-            onChange={e => handleChange(e)}
-          />
-          <label className={F.input}>Temperament</label>
+            id="breed"
+            onChange={e => handleFilterBreed(e)}
+            defaultValue={"DEFAULT"}
+            className={F.tempSelector}
+          >
+            <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
+              Breed Group
+            </option>
+            {breeds &&
+              breeds.map(el => {
+                return <option key={el.id}>{el.name}</option>;
+              })}
+          </select>
 
           <select
             name="temperament"
             id="temp"
             onChange={e => handleFilterTemp(e)}
             defaultValue={"DEFAULT"}
+            className={F.tempSelector}
           >
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
-              Select an option
+              Temperament
             </option>
             {temperaments &&
               temperaments.map(el => {
                 return <option key={el.id}>{el.name}</option>;
               })}
           </select>
-          <div className={F.btnContainer}>
-            <input type="submit" placeholder="Filter" className={F.filterBtn} />
-          </div>
+          <p className={F.orderTitle}>Order alphabetically</p>
+          <button className={F.order}>A-Z</button>
+          <button className={F.order}>Z-A</button>
         </form>
       </div>
     </div>

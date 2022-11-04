@@ -1,20 +1,18 @@
 body{
-    background: rgb(177, 138, 141);
-    background: linear-gradient(28deg, rgba(234,195,198,0.6587009803921569) 43%, rgb(248, 234, 234) 100%);
+    background-color: #0E0040;
 }
 
-.dogImage{
-    height:500px;
+hr{
     position: fixed;
-    left: 0px; 
-    top:200px;
-}
-.headerContainer{
-    height: 500px;
-    overflow: hidden;
-    position:fixed;
-    display: block;
-}
-.header{
+    top: 100px;
+    border: none;
+    border-top: solid 1px #fff;
     width: 100%;
+}
+.sidePic{
+    height: 420px;
+    position: fixed;
+    top: 300px;
+    left: 15px;
+    z-index:600;
 }

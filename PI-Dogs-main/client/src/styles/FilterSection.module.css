@@ -3,49 +3,61 @@
     margin-left: 50px;
     top:150px;
     display: block;
-    width: 11%;
-    height: 20%;
+    width: 15%;
+    height: 30%;
     position: fixed;
     justify-content: center;
     align-items: center;
+    border: solid 4px #FA450E;
+    border-radius: 25px;
 }
-.title{
-    font-size: 20px;
-    color: #dd3f2a;
-    text-transform: uppercase;
-    font-weight: 800;
+.filterLabel{
+width: 90px;
+transform: rotate(-15deg);
+position: relative;
+bottom: 25px;
+left: 60px;
     
 }
-.input{
-    margin-top: 5px;
-    border: none;
-    border-bottom: 1px solid #dd3f2a;
+
+
+.tempSelector{
     background-color: transparent;
-}
-
-
-.input input::placeholder{
-    color:#e63946;
-}
-.btnContainer{
-    width: 165px;
-    background-color: #58a4b0;
-    margin-top: 15px;
-    text-align: center;
-    padding-bottom: 2px;
-    cursor: pointer;
-}
-
-.filterBtn{
+    padding: 3px;
+    color: #FA450E;
+    border: solid 1px #FA450E;
+    border-radius: 5px;
     position: relative;
-    color: #fff;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-
+    bottom: 20px;
+    margin-left: 22px;
+    margin-top: 10px;
+    width: 80%;
 }
 
-.btnContainer:hover{
- background-color: #e63946;
- transition: 0.1s ease-in-out;
+.orderTitle{
+    color: #FFF;
+    margin-left: 22px;
+    position: relative;
+    bottom: 16px;
+    font-size: 14px;
+}
+.order{
+    background-color: transparent;
+    margin-left: 20px;
+    border: solid 1px #FA450E;
+    color: #FA450E;
+    position: relative;
+    bottom: 10px;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.order:hover{
+    background-color: #FA450E;
+    color: #0E0040;
+}
+
+.pressed{
+    background-color: #FA450E;
+    color: #0E0040;
 }

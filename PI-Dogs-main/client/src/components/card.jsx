@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function card(props) {
   return (
     <div>
-      <Link to={`/detail/${props.id}`}>
+      <Link to={`/detail/${props.id}`} style={{ textDecoration: "none" }}>
         <div className={Card.container}>
           <div className={Card.imgContainer}>
             <img src={props.image} className={Card.img} alt="" />
@@ -15,15 +15,15 @@ export default function card(props) {
             <div className={Card.temperamentContainer}>
               <p className={Card.temperament}>
                 {props.temperament
-                  ? props.temperament.slice(0, 3) + " "
+                  ? props.temperament.slice(0, 2) + " "
                   : props.temperament}
-              </p>
-              <p>
-                {props.minYearsOfLife} - {props.maxYearsOfLife} years
               </p>
             </div>
           </div>
-          <span className={Card.spanBtn}>See more</span>
+          <p className={Card.life}>
+            Life expectancy: {props.minYearsOfLife} - {props.maxYearsOfLife}{" "}
+            years
+          </p>
         </div>
       </Link>
     </div>
