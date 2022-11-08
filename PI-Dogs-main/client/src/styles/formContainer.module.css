@@ -1,8 +1,16 @@
 .formContainer{
-  width: 50%;
   position: relative;
-  top: 100px;
+  top: 120px;
+}
+
+.formContainer h1{
   float: left;
-  border-right: 1px solid black;
+  margin-left: 100px;
+  text-align: left;
+}
+
+.formContainer p{
+  float: left;
+  margin-left: 100px;
 
 }

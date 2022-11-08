@@ -10,9 +10,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <NavBar />
       <BrowserRouter>
         <Route exact path="/" component={LandingPage} />
+        <NavBar />
         <Route exact path="/home" component={Home} />
         <Route exact path="/create" component={FormContainer} />
         <Route exact path="/detail/:idRaza" component={DogDetail} />

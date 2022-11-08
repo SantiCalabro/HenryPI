@@ -45,3 +45,7 @@ export const getFiltered = payload => {
 export const clearDetail = () => {
   return { type: "CLEAR_DETAIL" };
 };
+
+export const clearFilter = () => {
+  return { type: "CLEAR_FILTER" };
+};

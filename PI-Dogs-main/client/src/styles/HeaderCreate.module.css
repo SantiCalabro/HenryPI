@@ -1,0 +1,17 @@
+
+h1{
+    color: #fff;
+    font-size: 36px;
+    
+}
+p{
+    color: #fff;
+    margin-top: 10px;
+
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 10px;
+  }

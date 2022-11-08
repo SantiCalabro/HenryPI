@@ -57,6 +57,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogDetail: [],
       };
+    case "CLEAR_FILTER":
+      return {
+        ...state,
+        filteredDogs: [],
+      };
     default:
       return state;
   }

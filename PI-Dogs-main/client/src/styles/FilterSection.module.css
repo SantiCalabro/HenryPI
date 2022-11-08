@@ -32,6 +32,7 @@ left: 60px;
     margin-left: 22px;
     margin-top: 10px;
     width: 80%;
+    cursor: pointer;
 }
 
 .orderTitle{
@@ -43,18 +44,26 @@ left: 60px;
 }
 .order{
     background-color: transparent;
-    margin-left: 20px;
     border: solid 1px #FA450E;
     color: #FA450E;
     position: relative;
-    bottom: 10px;
+    padding: 0px 5px 2px 5px;
     border-radius: 3px;
     font-weight: 600;
     cursor: pointer;
+    width: 40px;
+}
+.orderBtn{
+    display: flex;
+    width: 100px;
+    position: relative;
+    bottom: 10px;
+    right: 40px;
 }
 .order:hover{
     background-color: #FA450E;
     color: #0E0040;
+
 }
 
 .pressed{

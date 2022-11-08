@@ -36,30 +36,49 @@ export default function Form(props) {
       /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/;
 
     if (!input.name) {
-      errors.name = "Name is required";
+      errors.name = "*Ups! Name is required";
     } else if (!regexName.test(input.name)) {
-      errors.name = "Name is invalid";
+      errors.name = "*Name is invalid";
     }
     if (!input.image) {
-      errors.image = "Image is required";
+      errors.image = "*Image is required";
     } else if (!regexUrl.test(input.image)) {
-      errors.image = "It must be an URL";
+      errors.image = "*It must be an URL";
     }
     if (!input.minHeight || !input.maxHeight) {
-      errors.height = "Height is required";
+      errors.height = "*Height is required";
     }
     if (!input.minWeight || !input.minWeight) {
-      errors.weight = "Weight is required";
+      errors.weight = "*Weight is required";
     }
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
-      errors.yearsOfLife = "Years of life are required";
+      errors.yearsOfLife = "*Years of life are required";
     }
-    if (input.image && Object.keys(error).length === 0) {
+    if (input.temperaments.length > 0 && Object.keys(error).length === 0) {
       setDisable({ ...disable, submit: false });
     }
     return errors;
   }
-
+  function handleClear(e) {
+    setInput({
+      ...input,
+      temperaments: input.temperaments.filter(
+        el => !el.includes(e.target.innerText.slice(4))
+      ),
+    });
+    setClicks(clicks - 1);
+    if (clicks < 5) {
+      console.log("holisssss");
+      setError({
+        ...error,
+        temperament: "",
+      });
+      setDisable({
+        ...disable,
+        tags: false,
+      });
+    }
+  }
   function setTemp(e) {
     if (input.temperaments.length < 3) {
       handleChange(e);
@@ -71,7 +90,7 @@ export default function Form(props) {
     if (clicks > 2) {
       setError({
         ...error,
-        temperament: "Clicked more than three times",
+        temperament: "*You can't select more than three temperaments",
       });
       setDisable({
         ...disable,
@@ -102,18 +121,21 @@ export default function Form(props) {
       <form onSubmit={e => handleSubmit(e)}>
         <div className={F.NameAndBreed}>
           <div className={F.NameCont}>
-            <label>Name</label>
             <input
               type="text"
               id="name"
               name="name"
               onChange={e => handleChange(e)}
               onBlur={e => handleChange(e)}
+              placeholder="Name"
             />
-            {!error.name ? null : <span>{error.name}</span>}
+            {!error.name ? null : (
+              <span className={F.errorName}>{error.name}</span>
+            )}
           </div>
+
           <div className={F.BreedCont}>
-            <label>BreedGroup</label>
+            <label>Breed</label>
             <select
               id="breedGroup"
               name="breedGroup"
@@ -131,27 +153,33 @@ export default function Form(props) {
           </div>
         </div>
 
-        <div className={F.CheckCont}>
+        <div className={F.yearsContainer}>
           <h4>Years of life</h4>
-          <label>Min.</label>
-          <input
-            type="text"
-            id="minYearsOfLife"
-            value={input.minYearsOfLife}
-            name="minYearsOfLife"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          <label>Max.</label>
-          <input
-            type="text"
-            id="maxYearsOfLife"
-            value={input.maxYearsOfLife}
-            name="maxYearsOfLife"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          {!error.yearsOfLife ? null : <span>{error.yearsOfLife}</span>}
+          <div className={F.values}>
+            <label>Min.</label>
+            <input
+              type="text"
+              id="minYearsOfLife"
+              value={input.minYearsOfLife}
+              name="minYearsOfLife"
+              onChange={e => handleChange(e)}
+              onBlur={e => handleChange(e)}
+            />
+            <label>Max.</label>
+            <input
+              type="text"
+              id="maxYearsOfLife"
+              value={input.maxYearsOfLife}
+              name="maxYearsOfLife"
+              onChange={e => handleChange(e)}
+              onBlur={e => handleChange(e)}
+            />
+          </div>
+          {!error.yearsOfLife ? null : (
+            <span className={F.errorYears}>{error.yearsOfLife}</span>
+          )}
+        </div>
+        <div className={F.weightContainer}>
           <h4>Average weight</h4>
           <label>Min.</label>
           <input
@@ -171,8 +199,11 @@ export default function Form(props) {
             onChange={e => handleChange(e)}
             onBlur={e => handleChange(e)}
           />
-          {!error.weight ? null : <span>{error.weight}</span>}
-
+          {!error.weight ? null : (
+            <span className={F.errorWeight}>{error.weight}</span>
+          )}
+        </div>
+        <div className={F.heightContainer}>
           <h4>Average height</h4>
           <label>Min.</label>
           <input
@@ -192,9 +223,10 @@ export default function Form(props) {
             onChange={e => handleChange(e)}
             onBlur={e => handleChange(e)}
           />
-          {!error.height ? null : <span>{error.height}</span>}
+          {!error.height ? null : (
+            <span className={F.errorWeight}>{error.height}</span>
+          )}
         </div>
-
         <div className={F.url}>
           <h4>Upload an image</h4>
           <input
@@ -205,31 +237,53 @@ export default function Form(props) {
             onChange={e => handleChange(e)}
             onBlur={e => handleChange(e)}
           />
-          {!error.image ? null : <p>{error.image}</p>}
+          {!error.image ? null : (
+            <span className={F.errorUrl}>{error.image}</span>
+          )}
         </div>
-
-        <label className={F.tempTitle}>Temperament</label>
-        {!error.temperament ? null : <span>{error.temperament}</span>}
-
-        <div className={F.tagsArea}>
-          <div className={F.tags}>
-            {temperaments
-              ? temperaments.map(el => {
-                  return (
-                    <Tags
-                      key={el.id}
-                      name={el.name}
-                      id={el.id}
-                      value={el.name}
-                      setTemp={setTemp}
-                      disabled={disable.tags}
-                    />
-                  );
-                })
-              : "no tempers"}
+        <div className={F.tempContainer}>
+          <label>Temperament</label>
+          {!error.temperament ? null : (
+            <span className={F.errorTemp}>{error.temperament}</span>
+          )}
+          <div className={F.selectedTempers}>
+            {input.temperaments &&
+              input.temperaments.map(el => {
+                return (
+                  <span
+                    key={el}
+                    className={F.miniTags}
+                    onClick={e => handleClear(e)}
+                  >
+                    x | {el}
+                  </span>
+                );
+              })}
+          </div>
+          <div className={F.tagsArea}>
+            <div className={F.tags}>
+              {temperaments
+                ? temperaments.map(el => {
+                    return (
+                      <Tags
+                        key={el.id}
+                        name={el.name}
+                        id={el.id}
+                        value={el.name}
+                        setTemp={setTemp}
+                        disabled={disable.tags}
+                      />
+                    );
+                  })
+                : "no tempers"}
+            </div>
           </div>
         </div>
-        <button type="submit" disabled={disable.submit}>
+        <button
+          type="submit"
+          className={disable.submit === true ? F.submitBtn : F.btnActive}
+          disabled={disable.submit}
+        >
           Create your dog!
         </button>
       </form>

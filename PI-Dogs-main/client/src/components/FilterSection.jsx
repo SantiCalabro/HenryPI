@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import F from "../styles/FilterSection.module.css";
-import { getFiltered, showDogs, showBreeds } from "../redux/actions/index";
+import {
+  getFiltered,
+  showDogs,
+  showBreeds,
+  clearFilter,
+} from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import filter from "../statics/filter.png";
 
@@ -26,6 +31,7 @@ export default function FilterSection() {
   //   setInput({ ...input, [e.target.name]: e.target.value });
   // }
   function handleFilterTemp(e) {
+    dispatch(clearFilter());
     const filter = dogs.filter(el =>
       el.temperament.length > 0
         ? el.temperament.includes(e.target.value)
@@ -35,8 +41,34 @@ export default function FilterSection() {
     dispatch(getFiltered(filter));
   }
 
+  function handleSort(e) {
+    dispatch(clearFilter());
+    if (e.target.innerText === "A-Z") {
+      var sorted = dogs.sort(function (a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    } else if (e.target.innerText === "Z-A") {
+      var sorted = dogs.sort(function (a, b) {
+        if (a.name > b.name) {
+          return -1;
+        }
+        if (a.name < b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    dispatch(getFiltered(sorted));
+  }
+
   function handleFilterBreed(e) {
-    // console.log(e.target.value)
+    dispatch(clearFilter());
     const filter = dogs.filter(el => el.breedGroup == e.target.value);
     console.log(filter);
     dispatch(getFiltered(filter));
@@ -82,8 +114,14 @@ export default function FilterSection() {
               })}
           </select>
           <p className={F.orderTitle}>Order alphabetically</p>
-          <button className={F.order}>A-Z</button>
-          <button className={F.order}>Z-A</button>
+          <div className={F.orderBtn}>
+            <span className={F.order} onClick={e => handleSort(e)}>
+              A-Z
+            </span>
+            <span className={F.order} onClick={e => handleSort(e)}>
+              Z-A
+            </span>
+          </div>
         </form>
       </div>
     </div>

@@ -19,9 +19,9 @@ export default function FormContainer() {
   return (
     <div>
       <div className={FM.formContainer}>
+        <HeaderCreate />
         <Form />
       </div>
-      <HeaderCreate />
     </div>
   );
 }
