@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Form from "../components/Form";
 import { showBreeds, showTemperaments } from "../redux/actions";
 import FM from "../styles/formContainer.module.css";
@@ -7,7 +7,6 @@ import HeaderCreate from "../components/HeaderCreate";
 
 export default function FormContainer() {
   const dispatch = useDispatch();
-  //   const breeds = useSelector(state => state.showBreeds);
 
   React.useEffect(() => {
     dispatch(showBreeds());

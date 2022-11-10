@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { showDetail, clearDetail } from "../redux/actions";
 import D from "../styles/Detail.module.css";
 import loading from "../statics/loading.gif";
+import CatchError from "./Error";
+import LoadingHome from "./LoadingHome";
 export default function DogDetail(props) {
   const dispatch = useDispatch();
   const dog = useSelector(state => state.dogDetail);
@@ -25,9 +27,9 @@ export default function DogDetail(props) {
               <h4 className={D.tempTitle}>Temperament</h4>
               <div className={D.hashtags}>
                 <p className={D.temperament}>
-                  {el.temperament.map(el => (
-                    <span> {el}, </span>
-                  ))}
+                  {typeof el.temperaments[0] === "string"
+                    ? el.temperaments.map(el => <span> {el}, </span>)
+                    : el.temperaments.map(el => <span> {el.name}, </span>)}
                 </p>
               </div>
             </div>
@@ -64,12 +66,17 @@ export default function DogDetail(props) {
           </div>
         ))
       ) : (
-        <div className={D.background}>
-          <div className={D.loading}>
-            <img src={loading} alt="loading..." />
-            <h1>Loading...</h1>
-          </div>
-        </div>
+        <>
+          {dog.e === "La raza que buscas no existe" ? (
+            <div>
+              <CatchError />
+            </div>
+          ) : (
+            <div className={D.loadingContainer}>
+              <LoadingHome />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -5,7 +5,7 @@ import { postDog } from "../redux/actions";
 import F from "../styles/Form.module.css";
 import { useState } from "react";
 
-export default function Form(props) {
+export default function Form() {
   const breeds = useSelector(state => state.showBreeds);
   const temperaments = useSelector(state => state.showTemperaments);
   const dispatch = useDispatch();

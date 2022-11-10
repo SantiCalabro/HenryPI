@@ -12,9 +12,9 @@ const apiData = async () => {
         id: el.id,
         name: el.name,
         breedGroup: el.breed_group,
-        temperament: el.temperament
+        temperaments: el.temperament
           ? el.temperament.split(", ")
-          : "No temperaments",
+          : ["No temperaments"],
         minYearsOfLife: parseInt(el.life_span.slice(0, 2)),
         maxYearsOfLife: parseInt(el.life_span.slice(5, 7)),
         minWeight: parseInt(el.weight.imperial.slice(0, 1)),
@@ -71,7 +71,7 @@ router.get("/:idRaza", async (req, res) => {
 
   const filter = concatDogs.filter(el => el.id == idRaza);
   if (filter.length) return res.status(200).json(filter);
-  else return res.status(404).send("La raza que buscas no existe");
+  else return res.status(404).json({ e: "La raza que buscas no existe" });
 });
 
 router.post("/", async (req, res) => {

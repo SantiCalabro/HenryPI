@@ -8,9 +8,18 @@
    background-color: transparent;
    position: absolute;
    right: 550px;
+   color: white;
+   padding-left:10px
 }
 .search::placeholder{
     color: #fff;
     position: relative;
     left: 10px;
+}
+.search:focus{
+    outline-style: none;
+}
+.search:focus::-webkit-input-placeholder 
+{
+    color: transparent;
 }

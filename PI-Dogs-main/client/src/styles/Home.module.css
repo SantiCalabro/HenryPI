@@ -32,3 +32,21 @@ hr{
     width:150px;
     transition: 0.05s ease-in-out;
 }
+.loadingContainer{
+    margin-top: -100px;
+}
+.SearchBar{
+    z-index: 780;
+    position: relative;
+    top: 60px;   
+}
+.picPointer{
+z-index: 900;
+background-color: transparent;
+height: 300px;
+width: 200px;
+position: absolute;
+margin-top: 350px;
+left: 100px;
+cursor: pointer;
+}

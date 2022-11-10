@@ -14,9 +14,9 @@ export default function card(props) {
             <h4 className={Card.raceTitle}>{props.name}</h4>
             <div className={Card.temperamentContainer}>
               <p className={Card.temperament}>
-                {props.temperament
+                {props.temperament !== "No temperaments"
                   ? props.temperament.slice(0, 2) + " "
-                  : props.temperament}
+                  : "No temperaments"}
               </p>
             </div>
           </div>

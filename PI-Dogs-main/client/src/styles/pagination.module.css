@@ -1,0 +1,17 @@
+h1{
+    color: white;
+    border: solid 1px red;
+    z-index: 900 ;
+}
+
+.numberList{
+    list-style: none;
+    display: flex;
+    width: 70%;
+    position: relative;
+    left: 100px;
+}
+.number{
+    color: white;
+    cursor: pointer;
+}

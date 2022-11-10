@@ -1,21 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import F from "../styles/FilterSection.module.css";
-import {
-  getFiltered,
-  showDogs,
-  showBreeds,
-  clearFilter,
-} from "../redux/actions/index";
+import { getFiltered, showDogs, clearFilter } from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import filter from "../statics/filter.png";
 
 export default function FilterSection() {
-  // const [breed, setBreed] = useState("");
-  const [input, setInput] = useState({
-    breed: "",
-    temperament: "",
-  });
-
   const dogs = useSelector(state => state.showDogs);
   const breeds = useSelector(state => state.showBreeds);
 
@@ -23,19 +12,12 @@ export default function FilterSection() {
 
   const dispatch = useDispatch();
 
-  // function validate(input) {
-  //   let errors = {};
-  // }
-
-  // function handleChange(e) {
-  //   setInput({ ...input, [e.target.name]: e.target.value });
-  // }
   function handleFilterTemp(e) {
     dispatch(clearFilter());
     const filter = dogs.filter(el =>
-      el.temperament.length > 0
-        ? el.temperament.includes(e.target.value)
-        : "no hay nada"
+      el.temperaments.length > 0
+        ? el.temperaments.includes(e.target.value)
+        : "no dogs"
     );
 
     dispatch(getFiltered(filter));
@@ -74,9 +56,6 @@ export default function FilterSection() {
     dispatch(getFiltered(filter));
   }
 
-  React.useEffect(() => {
-    dispatch(showBreeds());
-  }, []);
   return (
     <div>
       <div className={F.container}>

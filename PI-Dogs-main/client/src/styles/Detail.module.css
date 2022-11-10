@@ -112,24 +112,10 @@
     text-align: left;
     left: 95px;
 }
-.loading{
-    display: flex;
-    width: 33%;
-    flex-direction: column;
-}
-.loading img{
-    position: relative;
-    top: 100px;
-    border-radius:30px;
-    width: 450px;
-}
-.loading h1{
-    position: relative;
-    top: 130px;
-    font-size: 20px;
-    font-weight: 300;
-    text-transform: uppercase;
-    letter-spacing: 5px;
+.loadingContainer{
+    position: absolute;
+    width: 100%;
+    margin-top: -200px;
 }
 .background{
     width: 100%;
