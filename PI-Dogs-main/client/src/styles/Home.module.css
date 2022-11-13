@@ -1,6 +1,9 @@
-body{
+.general{
     background-color: #0E0040;
+    height: 700px;
+ 
 }
+
 
 hr{
     position: fixed;
@@ -8,14 +11,17 @@ hr{
     border: none;
     border-top: solid 1px #fff;
     width: 100%;
+    z-index: 500;
+
 }
 .sidePic{
     height: 420px;
     position: fixed;
     top: 310px;
     left: 15px;
-    z-index:600;
+    z-index:100;
     cursor: pointer;
+
 }
 .createBtn{
     position: fixed;
@@ -34,12 +40,16 @@ hr{
 }
 .loadingContainer{
     margin-top: -100px;
+    height: 700px;
 }
 .SearchBar{
     z-index: 780;
     position: relative;
-    top: 60px;   
+    display: flex;
+    top: 65px;   
+    right: 60px;
 }
+
 .picPointer{
 z-index: 900;
 background-color: transparent;
@@ -49,4 +59,21 @@ position: absolute;
 margin-top: 350px;
 left: 100px;
 cursor: pointer;
+}
+.created{
+    position: relative;
+    top: 50px;
+    color: #fff;
+    right: 50px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 10px;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.created:hover{
+    border: solid 1px orangered;
+    transition: 0.15s ease-in-out;
 }

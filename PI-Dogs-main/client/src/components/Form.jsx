@@ -4,6 +4,7 @@ import Tags from "./Tags";
 import { postDog } from "../redux/actions";
 import F from "../styles/Form.module.css";
 import { useState } from "react";
+import SuccessMessage from "./SuccessMessage";
 
 export default function Form() {
   const breeds = useSelector(state => state.showBreeds);
@@ -13,9 +14,22 @@ export default function Form() {
   const [disable, setDisable] = useState({
     submit: true,
     tags: false,
+    msg: true,
   });
   const [clicks, setClicks] = useState(0);
   const [error, setError] = useState({});
+  const initialState = {
+    name: "",
+    breedGroup: "",
+    image: "",
+    minYearsOfLife: "",
+    maxYearsOfLife: "",
+    minWeight: "",
+    maxWeight: "",
+    minHeight: "",
+    maxHeight: "",
+    temperaments: [],
+  };
   const [input, setInput] = useState({
     name: "",
     breedGroup: "",
@@ -28,6 +42,41 @@ export default function Form() {
     maxHeight: "",
     temperaments: [],
   });
+
+  function setTemp(e) {
+    if (input.temperaments.length < 3) {
+      handleChange(e);
+      setInput({
+        ...input,
+        temperaments: input.temperaments.concat(e.target.innerText),
+      });
+      if (
+        input.name.length > 0 &&
+        input.image.length > 0 &&
+        input.minYearsOfLife.length > 0 &&
+        input.maxYearsOfLife.length > 0 &&
+        input.minHeight.length > 0 &&
+        input.maxHeight.length > 0 &&
+        input.minWeight.length > 0 &&
+        input.minWeight.length > 0
+      ) {
+        setDisable({ ...disable, submit: false });
+      }
+
+      setClicks(clicks + 1);
+    }
+    if (clicks === 3) {
+      setError({
+        ...error,
+        temperament: "*You can't select more than three temperaments",
+      });
+      setDisable({
+        ...disable,
+        tags: true,
+      });
+      setClicks(3);
+    }
+  }
 
   function validate(input) {
     const errors = {};
@@ -47,14 +96,44 @@ export default function Form() {
     }
     if (!input.minHeight || !input.maxHeight) {
       errors.height = "*Height is required";
+    } else if (input.minHeight < 0 || input.maxHeight < 0) {
+      errors.height = "*Height must be a positive number";
+    } else if (
+      input.minHeight > input.maxHeight ||
+      input.minHeight === input.maxHeight
+    ) {
+      errors.height = "*Max height must be greater than Min height";
     }
     if (!input.minWeight || !input.minWeight) {
       errors.weight = "*Weight is required";
+    } else if (input.minWeight < 0 || input.maxWeight < 0) {
+      errors.weight = "*Weight must be a positive number";
+    } else if (
+      input.minWeight > input.maxWeight ||
+      input.minWeight === input.maxWeight
+    ) {
+      errors.weight = "*Max Weight must be greater than Min weight";
     }
+
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
       errors.yearsOfLife = "*Years of life are required";
+    } else if (input.minYearsOfLife < 0 || input.maxYearsOfLife < 0) {
+      errors.yearsOfLife = "*Years of life must be a positive number";
+    } else if (
+      input.minYearsOfLife > input.maxYearsOfLife ||
+      input.minYearsOfLife === input.maxYearsOfLife
+    ) {
+      errors.yearsOfLife = "*Max years of life must be greater than Min";
+    } else if (
+      input.minYearsOfLife === parseInt(input.minYearsOfLife, 10) ||
+      input.maxYearsOfLife === parseInt(input.maxYearsOfLife, 10)
+    ) {
+      errors.yearsOfLife = "*Years of life must be an integer number";
     }
-    if (input.temperaments.length > 0 && Object.keys(error).length === 0) {
+    if (!input.temperaments.length) {
+      errors.temperament = "*Choose at least one temperament";
+    }
+    if (input.image.length > 0 && Object.keys(error).length === 0) {
       setDisable({ ...disable, submit: false });
     }
     return errors;
@@ -66,38 +145,24 @@ export default function Form() {
         el => !el.includes(e.target.innerText.slice(4))
       ),
     });
+
+    setError({
+      ...error,
+      temperament: "",
+    });
+    setDisable({
+      ...disable,
+      tags: false,
+    });
+    if (input.temperaments.length === 1) {
+      setDisable({ ...disable, submit: true });
+    }
+
     setClicks(clicks - 1);
-    if (clicks < 5) {
-      console.log("holisssss");
-      setError({
-        ...error,
-        temperament: "",
-      });
-      setDisable({
-        ...disable,
-        tags: false,
-      });
-    }
   }
-  function setTemp(e) {
-    if (input.temperaments.length < 3) {
-      handleChange(e);
-      setInput({
-        ...input,
-        temperaments: input.temperaments.concat(e.target.innerText),
-      });
-    }
-    if (clicks > 2) {
-      setError({
-        ...error,
-        temperament: "*You can't select more than three temperaments",
-      });
-      setDisable({
-        ...disable,
-        tags: true,
-      });
-    }
-    setClicks(clicks + 1);
+
+  function clearForm() {
+    setInput({ ...initialState });
   }
 
   function handleChange(e) {
@@ -112,12 +177,25 @@ export default function Form() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     dispatch(postDog(input));
+
+    setDisable({ ...disable, msg: false, submit: true });
+    setError({});
+    setClicks(0);
+    setInput({ ...input, temperaments: [] });
+    clearForm();
   }
 
   return (
     <div>
+      {disable.msg === false && (
+        <>
+          <div className={F.popUp}>
+            <SuccessMessage />
+          </div>
+        </>
+      )}
+
       <form onSubmit={e => handleSubmit(e)}>
         <div className={F.NameAndBreed}>
           <div className={F.NameCont}>
@@ -158,7 +236,7 @@ export default function Form() {
           <div className={F.values}>
             <label>Min.</label>
             <input
-              type="text"
+              type="number"
               id="minYearsOfLife"
               value={input.minYearsOfLife}
               name="minYearsOfLife"
@@ -167,7 +245,7 @@ export default function Form() {
             />
             <label>Max.</label>
             <input
-              type="text"
+              type="number"
               id="maxYearsOfLife"
               value={input.maxYearsOfLife}
               name="maxYearsOfLife"
@@ -183,7 +261,7 @@ export default function Form() {
           <h4>Average weight</h4>
           <label>Min.</label>
           <input
-            type="text"
+            type="number"
             id="minWeight"
             value={input.minWeight}
             name="minWeight"
@@ -192,7 +270,7 @@ export default function Form() {
           />
           <label>Max.</label>
           <input
-            type="text"
+            type="number"
             id="maxWeight"
             value={input.maxWeight}
             name="maxWeight"
@@ -207,7 +285,7 @@ export default function Form() {
           <h4>Average height</h4>
           <label>Min.</label>
           <input
-            type="text"
+            type="number"
             id="minHeight"
             value={input.minHeight}
             name="minHeight"
@@ -216,7 +294,7 @@ export default function Form() {
           />
           <label>Max.</label>
           <input
-            type="text"
+            type="number"
             id="maxHeight"
             value={input.maxHeight}
             name="maxHeight"
@@ -241,8 +319,8 @@ export default function Form() {
             <span className={F.errorUrl}>{error.image}</span>
           )}
         </div>
+        <label className={F.label}>Choose up to three temperaments</label>
         <div className={F.tempContainer}>
-          <label>Temperament</label>
           {!error.temperament ? null : (
             <span className={F.errorTemp}>{error.temperament}</span>
           )}
@@ -271,6 +349,7 @@ export default function Form() {
                         id={el.id}
                         value={el.name}
                         setTemp={setTemp}
+                        handleChange={handleChange}
                         disabled={disable.tags}
                       />
                     );

@@ -7,10 +7,12 @@ import filter from "../statics/filter.png";
 export default function FilterSection() {
   const dogs = useSelector(state => state.showDogs);
   const breeds = useSelector(state => state.showBreeds);
-
   const temperaments = useSelector(state => state.showTemperaments);
-
   const dispatch = useDispatch();
+
+  const breedNames = Object.values(breeds).map(el => el.name);
+  const select = new Set(breedNames);
+  const unrepeated = Array.from(select);
 
   function handleFilterTemp(e) {
     dispatch(clearFilter());
@@ -52,7 +54,7 @@ export default function FilterSection() {
   function handleFilterBreed(e) {
     dispatch(clearFilter());
     const filter = dogs.filter(el => el.breedGroup == e.target.value);
-    console.log(filter);
+
     dispatch(getFiltered(filter));
   }
 
@@ -71,9 +73,9 @@ export default function FilterSection() {
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
               Breed Group
             </option>
-            {breeds &&
-              breeds.map(el => {
-                return <option key={el.id}>{el.name}</option>;
+            {unrepeated &&
+              unrepeated.map(el => {
+                return <option key={el}>{el}</option>;
               })}
           </select>
 

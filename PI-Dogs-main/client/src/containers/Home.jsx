@@ -37,13 +37,19 @@ export default function Home() {
 
   function handleSearch(e) {
     const filter = dogs.filter(
-      el => el.name && el.name.includes(e.target.value)
+      el =>
+        el.name && el.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    dispatch(getFiltered(filter));
+    const msg = { msg: "Ups! Dog not found!" };
+    if (filter.length > 0) {
+      dispatch(getFiltered(filter));
+    } else {
+      dispatch(getFiltered(msg));
+    }
   }
 
   return (
-    <div>
+    <div className={H.general}>
       <hr />
       {!dogs.length ? (
         <div className={H.loadingContainer}>
@@ -53,15 +59,19 @@ export default function Home() {
         <div>
           <div className={H.picPointer} onClick={() => handleClick()}></div>
           <img src={sidePic} alt="" className={H.sidePic} />
-          <FilterSection />
+
           <div>
             <div className={H.SearchBar}>
               <SearchBar handleSearch={handleSearch} />
+              <Link to="/created" style={{ textDecoration: "none" }}>
+                <h4 className={H.created}>Created dogs</h4>
+              </Link>
             </div>
             <Link to="/create">
               <img src={createBtn} alt="" className={H.createBtn} />
             </Link>
             <Cards />
+            <FilterSection />
           </div>
         </div>
       )}

@@ -24,7 +24,7 @@ const apiData = async () => {
         image: el.image.url,
       };
     });
-    // console.log(dogs);
+
     return dogs;
   } catch (e) {
     console.log(e);
@@ -62,6 +62,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/created", async (req, res) => {
+  const dbDogs = await dbData();
+
+  try {
+    return res.status(200).json(dbDogs);
+  } catch (e) {
+    res.status(404).json({ e: "You haven't created any dog yet!" });
+  }
+});
+
 router.get("/:idRaza", async (req, res) => {
   let { idRaza } = req.params;
 
@@ -95,7 +105,6 @@ router.post("/", async (req, res) => {
     !maxHeight ||
     !minWeight ||
     !maxWeight ||
-    // !mearsOfLife ||
     !breedGroup ||
     !temperaments
   ) {
@@ -122,7 +131,6 @@ router.post("/", async (req, res) => {
       });
 
       await dog.addTemperament(temp);
-      console.log("Created!");
       res.status(200).json(dog);
     } catch (e) {
       console.log(e);

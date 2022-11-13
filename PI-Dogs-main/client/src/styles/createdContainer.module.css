@@ -1,0 +1,25 @@
+.general{
+  background-color: #0E0040;
+  width: 100%;
+  display: flex;
+}
+.title, .subtitle {
+    position: relative;
+    top: 130px;
+    right: 980px;
+    font-size: 30px;
+    z-index: 500;
+    color: #fff;
+}
+.subtitle{
+    font-size: 20px;
+    z-index: 501;
+
+}
+
+
+.pic{
+  width: 65%;
+  position: absolute;
+  top: 100px;
+}

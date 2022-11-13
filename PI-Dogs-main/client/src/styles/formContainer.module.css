@@ -1,16 +1,22 @@
 .formContainer{
   position: relative;
-  top: 120px;
+  top: 100px;
+  background-color: #0E0040;
+  height: 700px;
 }
 
 .formContainer h1{
   float: left;
   margin-left: 100px;
+  position: relative;
+  top:20px;
   text-align: left;
 }
 
 .formContainer p{
   float: left;
   margin-left: 100px;
+  position: relative;
+  top:20px;
 
 }

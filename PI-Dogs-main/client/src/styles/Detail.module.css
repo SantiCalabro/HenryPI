@@ -1,16 +1,17 @@
 .container{
     background-color: #fafafa;
-    height:84vh;
+    height:570px;
     position: relative;
     top: 111px;
     width: 100%;
+    height: 570px;
 }
 .imageContainer{
     position: relative;
-    height: 583px;
+    height: 470px;
     float: right;
     display: flex;
-    background-color: aqua;
+    top: -11px;
 }
 .image{
     justify-content: left;
@@ -76,27 +77,27 @@
     position: absolute;
     color: #0E0040;
     margin-top: 230px;
-    left: 170px;
+    left: 180px;
 }
 .height{
     position: absolute;
     color: #0E0040;
     margin-top: 205px;
-    left: 170px;
+    left: 180px;
 }
 
 .years{
     position: absolute;
     color: #0E0040;
     margin-top:180px;
-    left: 205px;
+    left: 215px;
 }
 .tempContainer{
     width: 50%;
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: 100px;
+    bottom: 160px;
 
 }
 
@@ -108,9 +109,9 @@
 .temperament{
     position: absolute;
     color: #0E0040;
-    top: 15px;
+    top: 20px;
     text-align: left;
-    left: 95px;
+    left: 90px;
 }
 .loadingContainer{
     position: absolute;

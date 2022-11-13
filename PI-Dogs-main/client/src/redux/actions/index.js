@@ -29,6 +29,14 @@ export const showBreeds = () => dispatch => {
     });
 };
 
+export const getCreated = () => dispatch => {
+  return fetch("http://localhost:3001/dogs/created")
+    .then(res => res.json())
+    .then(res => {
+      dispatch({ type: "GET_CREATED", payload: res });
+    });
+};
+
 export const postDog = payload => async dispatch => {
   try {
     const res = await axios.post("http://localhost:3001/dogs", payload);

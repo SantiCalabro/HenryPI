@@ -36,15 +36,16 @@ function rootReducer(state = initialState, action) {
         filteredDogs: action.payload,
       };
 
+    case "GET_CREATED":
+      return {
+        ...state,
+        created: action.payload,
+      };
+
     case "CREATE_DOG":
       return {
         ...state,
         showDogs: [...state.showDogs, ...action.payload],
-      };
-    case "POST_DOGS":
-      return {
-        ...state,
-        created: action.payload,
       };
 
     case "CLEAR_DOGS":

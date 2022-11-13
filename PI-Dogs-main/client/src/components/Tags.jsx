@@ -6,7 +6,9 @@ export default function Tags(props) {
       <span
         className={props.disabled === true ? T.disabled : T.tagContainer}
         value={props.name}
-        onClick={e => props.setTemp(e)}
+        onClick={e => {
+          props.setTemp(e);
+        }}
       >
         {props.name}
       </span>
