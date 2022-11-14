@@ -7,7 +7,9 @@ export default function CreatedDog(props) {
       <hr />
       <div className={H.container}>
         <h1>Upload your buddy!</h1>
-        <p>Let the universe know who your best friend is</p>
+        <p className={H.subtitle}>
+          Let the universe know who your best friend is
+        </p>
       </div>
     </div>
   );

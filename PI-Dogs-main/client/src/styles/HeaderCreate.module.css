@@ -2,10 +2,11 @@
 h1{
     color: #fff;
     font-size: 36px;
-    
+
 }
-p{
-    color: #fff;
+.subtitle{
+  color: #0E0040;
+
 }
 .container{
     display: flex;

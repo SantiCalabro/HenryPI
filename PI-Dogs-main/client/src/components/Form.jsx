@@ -48,12 +48,21 @@ export default function Form() {
   });
 
   function setTemp(e) {
+    setClicks(clicks + 1);
+
+    if (clicks > 2) {
+      setError({
+        ...error,
+        temperament: "*You can't select more than three temperaments",
+      });
+    }
     if (input.temperaments.length < 3) {
       handleChange(e);
       setInput({
         ...input,
         temperaments: input.temperaments.concat(e.target.innerText),
       });
+
       if (
         input.name.length > 0 &&
         input.image.length > 0 &&
@@ -66,19 +75,6 @@ export default function Form() {
       ) {
         setDisable({ ...disable, submit: false });
       }
-
-      setClicks(clicks + 1);
-    }
-    if (clicks === 3) {
-      setError({
-        ...error,
-        temperament: "*You can't select more than three temperaments",
-      });
-      setDisable({
-        ...disable,
-        tags: true,
-      });
-      setClicks(3);
     }
   }
 
@@ -106,7 +102,7 @@ export default function Form() {
       input.minHeight > input.maxHeight ||
       input.minHeight === input.maxHeight
     ) {
-      errors.height = "*Max height must be greater than Min";
+      errors.height = "*Max height must be bigger";
     }
     if (!input.minWeight || !input.minWeight) {
       errors.weight = "*Weight is required";
@@ -116,7 +112,7 @@ export default function Form() {
       input.minWeight > input.maxWeight ||
       input.minWeight === input.maxWeight
     ) {
-      errors.weight = "*Max weight must be greater than Min weight";
+      errors.weight = "*Max weight must be bigger";
     }
 
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
@@ -127,7 +123,7 @@ export default function Form() {
       input.minYearsOfLife > input.maxYearsOfLife ||
       input.minYearsOfLife === input.maxYearsOfLife
     ) {
-      errors.yearsOfLife = "*Max years of life must be greater than Min";
+      errors.yearsOfLife = "*Max years of life must be bigger";
     } else if (
       input.minYearsOfLife === parseInt(input.minYearsOfLife, 10) ||
       input.maxYearsOfLife === parseInt(input.maxYearsOfLife, 10)
@@ -177,7 +173,6 @@ export default function Form() {
         [e.target.name]: e.target.value,
       })
     );
-    console.log(e.target.value);
   }
 
   function handleSubmit(e) {
@@ -201,177 +196,171 @@ export default function Form() {
         </>
       )}
 
-      <form onSubmit={e => handleSubmit(e)} autoComplete="off">
-        <div className={F.NameAndBreed}>
-          <div className={F.NameCont}>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
-              placeholder="Name"
-              className={F.name}
-            />
-            {!error.name ? null : (
-              <span className={F.errorName}>{error.name}</span>
+      <div className={F.formContainer}>
+        <form onSubmit={e => handleSubmit(e)} autoComplete="off">
+          <div className={F.NameAndBreed}>
+            <div className={F.NameCont}>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleChange(e)}
+                placeholder="Name"
+                className={F.name}
+              />
+              {!error.name ? null : (
+                <>
+                  <span className={F.errorName}>{error.name}</span>
+                </>
+              )}
+            </div>
+
+            <div className={F.BreedCont}>
+              <label>Breed</label>
+              <select
+                id="breedGroup"
+                name="breedGroup"
+                defaultValue={"No Breed"}
+                onChange={e => handleChange(e)}
+                onBlur={e => handleChange(e)}
+              >
+                <option value="No Breed">No Breed</option>
+                {breeds
+                  ? unrepeated.map(el => {
+                      return <option key={el}>{el}</option>;
+                    })
+                  : "no breeds"}
+              </select>
+            </div>
+          </div>
+
+          <div className={F.yearsContainer}>
+            <h4>Years of life</h4>
+            <div className={F.values}>
+              <label>Min.</label>
+              <input
+                type="number"
+                id="minYearsOfLife"
+                value={input.minYearsOfLife}
+                name="minYearsOfLife"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleChange(e)}
+              />
+              <label>Max.</label>
+              <input
+                type="number"
+                id="maxYearsOfLife"
+                value={input.maxYearsOfLife}
+                name="maxYearsOfLife"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleChange(e)}
+              />
+            </div>
+            {!error.yearsOfLife ? null : (
+              <span className={F.errorYears}>{error.yearsOfLife}</span>
             )}
           </div>
-
-          <div className={F.BreedCont}>
-            <label>Breed</label>
-            <select
-              id="breedGroup"
-              name="breedGroup"
-              defaultValue={"No Breed"}
-              onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
-            >
-              <option value="No Breed">No Breed</option>
-              {breeds
-                ? unrepeated.map(el => {
-                    return <option key={el}>{el}</option>;
-                  })
-                : "no breeds"}
-            </select>
-          </div>
-        </div>
-
-        <div className={F.yearsContainer}>
-          <h4>Years of life</h4>
-          <div className={F.values}>
+          <div className={F.weightContainer}>
+            <h4>Average weight</h4>
             <label>Min.</label>
             <input
               type="number"
-              id="minYearsOfLife"
-              value={input.minYearsOfLife}
-              name="minYearsOfLife"
+              id="minWeight"
+              value={input.minWeight}
+              name="minWeight"
               onChange={e => handleChange(e)}
               onBlur={e => handleChange(e)}
             />
             <label>Max.</label>
             <input
               type="number"
-              id="maxYearsOfLife"
-              value={input.maxYearsOfLife}
-              name="maxYearsOfLife"
+              id="maxWeight"
+              value={input.maxWeight}
+              name="maxWeight"
               onChange={e => handleChange(e)}
               onBlur={e => handleChange(e)}
             />
+            {!error.weight ? null : (
+              <span className={F.errorWeight}>{error.weight}</span>
+            )}
           </div>
-          {!error.yearsOfLife ? null : (
-            <span className={F.errorYears}>{error.yearsOfLife}</span>
-          )}
-        </div>
-        <div className={F.weightContainer}>
-          <h4>Average weight</h4>
-          <label>Min.</label>
-          <input
-            type="number"
-            id="minWeight"
-            value={input.minWeight}
-            name="minWeight"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          <label>Max.</label>
-          <input
-            type="number"
-            id="maxWeight"
-            value={input.maxWeight}
-            name="maxWeight"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          {!error.weight ? null : (
-            <span className={F.errorWeight}>{error.weight}</span>
-          )}
-        </div>
-        <div className={F.heightContainer}>
-          <h4>Average height</h4>
-          <label>Min.</label>
-          <input
-            type="number"
-            id="minHeight"
-            value={input.minHeight}
-            name="minHeight"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          <label>Max.</label>
-          <input
-            type="number"
-            id="maxHeight"
-            value={input.maxHeight}
-            name="maxHeight"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          {!error.height ? null : (
-            <span className={F.errorHeight}>{error.height}</span>
-          )}
-        </div>
-        <div className={F.url}>
-          <h4>Upload an image</h4>
-          <input
-            id="image"
-            type="text"
-            value={input.image}
-            name="image"
-            onChange={e => handleChange(e)}
-            onBlur={e => handleChange(e)}
-          />
-          {!error.image ? null : (
-            <span className={F.errorUrl}>{error.image}</span>
-          )}
-        </div>
-        <label className={F.label}>Choose up to three temperaments</label>
-        <div className={F.tempContainer}>
-          {!error.temperament ? null : (
-            <span className={F.errorTemp}>{error.temperament}</span>
-          )}
-          <div className={F.selectedTempers}>
-            {input.temperaments &&
-              input.temperaments.map(el => {
-                return (
-                  <span
-                    key={el}
-                    className={F.miniTags}
-                    onClick={e => handleClear(e)}
-                  >
-                    x | {el}
-                  </span>
-                );
-              })}
+          <div className={F.heightContainer}>
+            <h4>Average height</h4>
+            <label>Min.</label>
+            <input
+              type="number"
+              id="minHeight"
+              value={input.minHeight}
+              name="minHeight"
+              onChange={e => handleChange(e)}
+              onBlur={e => handleChange(e)}
+            />
+            <label>Max.</label>
+            <input
+              type="number"
+              id="maxHeight"
+              value={input.maxHeight}
+              name="maxHeight"
+              onChange={e => handleChange(e)}
+              onBlur={e => handleChange(e)}
+            />
+            {!error.height ? null : (
+              <span className={F.errorHeight}>{error.height}</span>
+            )}
           </div>
-          <div className={F.tagsArea}>
-            <div className={F.tags}>
-              {temperaments
-                ? temperaments.map(el => {
-                    return (
-                      <Tags
-                        key={el.id}
-                        name={el.name}
-                        id={el.id}
-                        value={el.name}
-                        setTemp={setTemp}
-                        handleChange={handleChange}
-                        disabled={disable.tags}
-                      />
-                    );
-                  })
-                : "no tempers"}
+          <div className={F.url}>
+            <h4>Upload an image</h4>
+            <input
+              id="image"
+              type="text"
+              value={input.image}
+              name="image"
+              className={F.inputUrl}
+              onChange={e => handleChange(e)}
+              onBlur={e => handleChange(e)}
+            />
+            {!error.image ? null : (
+              <span className={F.errorUrl}>{error.image}</span>
+            )}
+          </div>
+          <label className={F.label}>Choose up to three temperaments</label>
+          <div className={F.tempContainer}>
+            {!error.temperament ? null : (
+              <span className={F.errorTemp}>{error.temperament}</span>
+            )}
+
+            <div className={F.tagsArea}>
+              <div className={F.tags}>
+                {temperaments
+                  ? temperaments.map(el => {
+                      return (
+                        <Tags
+                          key={el.id}
+                          name={el.name}
+                          id={el.id}
+                          value={el.name}
+                          setTemp={setTemp}
+                          handleChange={handleChange}
+                          handleClear={handleClear}
+                          temperaments={input.temperaments}
+                          error={error.temperament}
+                        />
+                      );
+                    })
+                  : "no tempers"}
+              </div>
             </div>
           </div>
-        </div>
-        <button
-          type="submit"
-          className={disable.submit === true ? F.submitBtn : F.btnActive}
-          disabled={disable.submit}
-        >
-          Create your dog!
-        </button>
-      </form>
+          <button
+            type="submit"
+            className={disable.submit === true ? F.submitBtn : F.btnActive}
+            disabled={disable.submit}
+          >
+            Create your dog!
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

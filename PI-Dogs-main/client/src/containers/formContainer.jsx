@@ -21,10 +21,13 @@ export default function FormContainer() {
       {err == "error" ? (
         <Error />
       ) : (
-        <div className={FM.formContainer}>
-          <HeaderCreate />
-          <Form />
-        </div>
+        <>
+          <div className={FM.box}></div>
+          <div className={FM.formContainer}>
+            <HeaderCreate />
+            <Form />
+          </div>
+        </>
       )}
     </div>
   );

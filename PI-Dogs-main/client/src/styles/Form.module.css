@@ -1,25 +1,28 @@
+
 .tagsArea{
     border-radius: 8px;
     display: flex;
     width: 50%;
-    height: 450px;
+    height: 480px;
     overflow-x: hidden;
     position: absolute;
     float: right;
     right: 30px;
-    background-color: #271A53;
-    border: solid 1px #fff;
+    background-color: rgb(230, 230, 230);
+
 }
 .tagsArea::-webkit-scrollbar{
     background-color:#07001f ;
+    border-radius: 0px 8px 8px 0px;
 }
 
 .tagsArea::-webkit-scrollbar-thumb {
-    background: #999;
+    background: #3c287e ;
+    border-radius: 0px 8px 8px 0px;
   } 
 
   .tagsArea::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #291b57 ;
   }
 .tempContainer label{
     position: absolute;
@@ -70,14 +73,14 @@
 .NameCont input{
     background-color: transparent;
     border: none;
-    border-bottom: solid 1px #FA450E;
+    border-bottom: solid 1px #555;
     margin-left: 10px;
     width: 250px;
-    color:#FA450E
+    color:#555;
 }
 
 .NameCont input::placeholder{
-    color:#FA450E ;
+    color:#555 ;
     font-size: 16px;
 }
 .name:focus{
@@ -86,15 +89,15 @@
 .BreedCont {
     position: absolute;
     left: 50px;
-    margin-top: 70px;
+    margin-top: 80px;
 
 }
 .BreedCont select{
   position: relative;
   left: 50px;
-  color: #FA450E;
+  color: #555;
   background-color: transparent;
-  border: solid 1px #FA450E ;
+  border: solid 1px #555 ;
   border-radius: 3px;
   width: 170%;
   height: 25px;
@@ -102,7 +105,7 @@
 }
 
 .BreedCont label{
-    color: #FA450E;
+    color: #555;
     font-weight: 500;
     position: relative;
     left: 50px;
@@ -112,66 +115,61 @@
     position: relative;
     right: 250px;
     top: 22px;
-    font-size: 12px;
+    font-size: 14px;
+    color: #F44336;
 }
 .errorYears{
     position: relative;
     top: 2px;
-    font-size: 12px;
-    color: #fff;
+    font-size: 14px;
+    color: #F44336;
 }
-.errorWeight{
-    color: white;
-    font-size: 12px;
+.errorWeight, .errorHeight{
+    color: #F44336;
+    font-size: 14px;
     position: relative;
     top: 22px;
     right: 165px;
 }
-.errorHeight{
-    color: #fff;
-    font-size: 12px;
-    position: absolute;
-    margin-top: 25px;
-    right: 165px;
-   
-}
+
 
 .errorUrl{
-    font-size: 12px;
-    color: #fff;
+    font-size: 14px;
+    color: #F44336;
     float: left;
     margin-top: 5px;
+
 }
 .errorTemp{
-    color: #fff;
+    color: #F44336;
     position: relative;
     float: left;
-    top: -55px;
-    left: 10px;
+    top: -32px;
+    left: 285px;
     font-size: 14px;
 }
 .yearsContainer{
     width: 25%;
     text-align: left;
-    color: #FA450E;
+    color: #555;
     position: absolute;
     margin-top:110px;
-    left: 450px;
+    left: 410px;
 }   
 .yearsContainer input{
     background-color: transparent;
     border: none;
-    border-bottom: solid 1px #FA450E;
+    border-bottom: solid 1px #555;
     width: 30px;
     margin-right: 20px;
-    color: #FA450E;
+    color: #555;
     
 }
 
 .weightContainer{
     width: 25%;
     text-align: left;
-    color: #FA450E;
+    color: #555;
     position: absolute;
     margin-top: 200px;
     left: 100px;
@@ -179,52 +177,53 @@
 .weightContainer input{
     background-color: transparent;
     border: none;
-    border-bottom: solid 1px #FA450E;
+    border-bottom: solid 1px #555;
     width: 30px;
     margin-right: 20px;
-    color: #FA450E;
+    color: #555;
 }
 
 .heightContainer{
     width: 25%;
     text-align: left;
-    color: #FA450E;
+    color: #555;
     position: absolute;
     margin-top: 200px;
-    left: 450px;
+    left: 410px;
 }
 .heightContainer input{
     background-color: transparent;
     border: none;
-    border-bottom: solid 1px #FA450E;
+    border-bottom: solid 1px #555;
     width: 30px;
     margin-right: 20px;
-    color: #FA450E;
+    color: #555;
 }
 
 .url{
     width: 35%;
     text-align: center;
-    color: #FA450E;
+    color: #0E0040;
     position: absolute;
     margin-top: 335px;
     left: 100px;
 }
 .url input{
-    background-color: transparent;
-    border: solid 1px #FA450E;
+    background-color: #fff;
     width: 100%;
     height: 30px;
     margin-right: 20px;
     margin-top: 10px;
+    border: none;
 }
+
 
 
 .label{
     position: absolute;
     margin-top:-35px;
     margin-left: 10px;
-    color: #FA450E;
+    color: #0E0040;
     font-weight: 600;
 }
 
@@ -250,8 +249,8 @@
 
 .btnActive{
     background-color: transparent;
-    color: #fff;
-    border: solid 2px #fff;
+    color:  #0e0040;
+    border: solid 2px  #0e0040;
     padding: 10px 20px 10px;
     width:200px;
     border-radius: 30px;
@@ -272,7 +271,8 @@
 
 .miniTags{
     padding:2px 10px 4px 10px;
-    border: solid 1px #888;
+    border: solid 1px #FA450E;
+    color: #FA450E;
     font-size: 14px;
     border-radius: 6px;
     cursor: pointer;
@@ -281,11 +281,12 @@
 
 .miniTags:hover{
     padding:2px 10px 4px 10px;
-    border: solid 1px #888;
+    border: solid 1px #FA450E;
+    color: #fff;
     border-radius: 6px;
     cursor: pointer;
     margin-right:5px ;
-    background-color: #666;
+    background-color: #FA450E;
     transition: 0.12s ease-in-out;
 }
 
@@ -295,7 +296,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 input:focus{
-
     outline: none;
-    border-bottom: 1px solid #fff;
+
+}
+
+.inputUrl {
+    padding: 10px;
 }

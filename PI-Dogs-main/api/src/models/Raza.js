@@ -18,12 +18,15 @@ module.exports = sequelize => {
       },
       breedGroup: {
         type: DataTypes.STRING,
+        defaultValue: "No breed",
       },
       minYearsOfLife: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
+        defaultValue: 10,
       },
       maxYearsOfLife: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
+        defaultValue: 15,
       },
       minHeight: {
         type: DataTypes.FLOAT,

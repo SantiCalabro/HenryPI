@@ -18,9 +18,11 @@ export default function SuccessMessage() {
           <Link to="/created">
             <p className={S.createdBtn}>Visit your new friends</p>
           </Link>
-          <p onClick={() => setHide()} className={S.btn}>
-            Create other dog
-          </p>
+          <Link to="/create">
+            <p onClick={() => setHide()} className={S.btn}>
+              Create other dog
+            </p>
+          </Link>
           <img className={S.pic} src={successPic} alt="" />
           <div className={S.full}></div>
         </div>
