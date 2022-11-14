@@ -13,20 +13,22 @@ router.get("/", async (req, res) => {
     let joinedTemps = mappedTemps.join();
     let arr = joinedTemps.split(",");
     let corrected = arr.map(el => (el[0] === " " ? el.slice(1) : el));
+    try {
+      corrected.map(el =>
+        el.length > 0
+          ? Temperament.findOrCreate({
+              where: {
+                name: el,
+              },
+            })
+          : el
+      );
+      let find = await Temperament.findAll();
 
-    ///ACÁ TENÉS QUE CREAR LOS TEMPERAMENTOS
-    corrected.map(el =>
-      el.length > 0
-        ? Temperament.findOrCreate({
-            where: {
-              name: el,
-            },
-          })
-        : el
-    );
-    let find = await Temperament.findAll();
-
-    res.send(find);
+      res.status(200).send(find);
+    } catch {
+      res.status(404).json({ error: "Error fetching temperaments" });
+    }
   }
 
   router.get("/filter/:temp", async (req, res) => {
@@ -38,7 +40,7 @@ router.get("/", async (req, res) => {
 
     const filter = concatDogs.filter(el => el.temperament == temp);
     if (filter.length) return res.status(200).json(filter);
-    else return res.status(404).send("No hay temperamento");
+    else return res.status(404).json({ error: "No temperaments" });
   });
 });
 

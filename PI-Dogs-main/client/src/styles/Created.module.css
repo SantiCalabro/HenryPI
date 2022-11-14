@@ -48,5 +48,39 @@
     margin-top: -5px;
   }
 
- 
+  .errorContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
+  }
+
+ .title{
+  color: #0E0040;
+ }
+
+ .btn{
+position: relative;
+top: 20px;
+background-color: #FA450F;
+border: none;
+color: #fff;
+padding-left: 15px;
+padding-right: 15px;
+padding-top: 5px;
+padding-bottom: 5px;
+font-size: 16px;
+border-radius: 30px;
+cursor: pointer;
+font-weight: 600;
+ }
+
+ .btn:hover{
+  transition: 0.15s ease-in-out;
+  background-color: #0E0040;
+ }
+
+ .errorPic{
+ width: 300px;
+  }

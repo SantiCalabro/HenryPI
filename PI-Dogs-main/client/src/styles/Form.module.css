@@ -80,6 +80,9 @@
     color:#FA450E ;
     font-size: 16px;
 }
+.name:focus{
+    background-color: transparent;
+}
 .BreedCont {
     position: absolute;
     left: 50px;
@@ -124,6 +127,15 @@
     top: 22px;
     right: 165px;
 }
+.errorHeight{
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    margin-top: 25px;
+    right: 165px;
+   
+}
+
 .errorUrl{
     font-size: 12px;
     color: #fff;

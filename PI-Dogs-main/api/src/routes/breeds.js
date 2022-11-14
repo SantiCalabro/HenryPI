@@ -8,18 +8,21 @@ router.get("/", async (req, res) => {
   const breeds = await apiData.data.map(el =>
     el.breed_group ? el.breed_group : "No breed"
   );
-
-  breeds.map(async el => {
-    await Breeds.findOrCreate({
-      where: {
-        name: el,
-      },
+  try {
+    breeds.map(async el => {
+      await Breeds.findOrCreate({
+        where: {
+          name: el,
+        },
+      });
     });
-  });
 
-  const allBreeds = await Breeds.findAll();
+    const allBreeds = await Breeds.findAll();
 
-  res.send(allBreeds);
+    res.status(200).send(allBreeds);
+  } catch {
+    res.status(404).json({ e: "Error fetching breeds" });
+  }
 });
 
 module.exports = router;

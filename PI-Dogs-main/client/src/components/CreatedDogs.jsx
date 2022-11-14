@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCreated } from "../redux/actions";
 import Card from "./card";
 import Cr from "../styles/Created.module.css";
+import { Link } from "react-router-dom";
+import errorPic from "../statics/404.png";
 
 export default function CreatedDogs() {
   const dispatch = useDispatch();
@@ -14,25 +16,33 @@ export default function CreatedDogs() {
   return (
     <>
       <div className={Cr.cardsContainer}>
-        {created.length > 0
-          ? created.map(el => (
-              <div key={el.id} className={Cr.card}>
-                <Card
-                  name={el.name}
-                  key={el.id}
-                  image={el.image}
-                  temperament={
-                    typeof el.temperaments[0] === "string"
-                      ? el.temperaments
-                      : el.temperaments.map(el => el.name)
-                  }
-                  id={el.id}
-                  minYearsOfLife={el.minYearsOfLife}
-                  maxYearsOfLife={el.maxYearsOfLife}
-                />
-              </div>
-            ))
-          : "No hay nada"}
+        {created.length > 0 ? (
+          created.map(el => (
+            <div key={el.id} className={Cr.card}>
+              <Card
+                name={el.name}
+                key={el.id}
+                image={el.image}
+                temperament={
+                  typeof el.temperaments[0] === "string"
+                    ? el.temperaments
+                    : el.temperaments.map(el => el.name)
+                }
+                id={el.id}
+                minYearsOfLife={el.minYearsOfLife}
+                maxYearsOfLife={el.maxYearsOfLife}
+              />
+            </div>
+          ))
+        ) : (
+          <div className={Cr.errorContainer}>
+            <img className={Cr.errorPic} src={errorPic} alt="" />
+            <h1 className={Cr.title}>You haven't posted any new dog yet</h1>
+            <Link to="/create">
+              <button className={Cr.btn}>Do it now!</button>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

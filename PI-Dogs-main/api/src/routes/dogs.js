@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
   const apiDogs = await apiData();
   const dbDogs = await dbData();
   const concatDogs = apiDogs.concat(dbDogs);
-  //  console.log(concatDogs[0].temperament.split(","));
+
   if (name) {
     const byName = concatDogs.filter(el => el.name == name);
     return res.status(200).json(byName);

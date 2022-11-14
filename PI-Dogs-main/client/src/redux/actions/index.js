@@ -4,21 +4,24 @@ export const showDogs = () => dispatch => {
     .then(res => res.json())
     .then(res => {
       dispatch({ type: "SHOW_DOGS", payload: res });
-    });
+    })
+    .catch(() => dispatch({ type: "SET_ERROR" }));
 };
 export const showDetail = id => dispatch => {
   return fetch(`http://localhost:3001/dogs/${id}`)
     .then(res => res.json())
     .then(res => {
       dispatch({ type: "SHOW_DETAIL", payload: res });
-    });
+    })
+    .catch(() => dispatch({ type: "SET_ERROR" }));
 };
 export const showTemperaments = () => dispatch => {
   return fetch("http://localhost:3001/temperaments")
     .then(res => res.json())
     .then(res => {
       dispatch({ type: "SHOW_TEMPS", payload: res });
-    });
+    })
+    .catch(() => dispatch({ type: "SET_ERROR" }));
 };
 
 export const showBreeds = () => dispatch => {
@@ -26,7 +29,8 @@ export const showBreeds = () => dispatch => {
     .then(res => res.json())
     .then(res => {
       dispatch({ type: "SHOW_BREEDS", payload: res });
-    });
+    })
+    .catch(() => dispatch({ type: "SET_ERROR" }));
 };
 
 export const getCreated = () => dispatch => {
@@ -34,7 +38,8 @@ export const getCreated = () => dispatch => {
     .then(res => res.json())
     .then(res => {
       dispatch({ type: "GET_CREATED", payload: res });
-    });
+    })
+    .catch(() => dispatch({ type: "SET_ERROR" }));
 };
 
 export const postDog = payload => async dispatch => {
@@ -42,7 +47,7 @@ export const postDog = payload => async dispatch => {
     const res = await axios.post("http://localhost:3001/dogs", payload);
     return dispatch({ type: "POST_DOG", payload: res.data });
   } catch {
-    return console.log(payload);
+    return dispatch({ type: "SET_ERROR" });
   }
 };
 

@@ -16,10 +16,12 @@ import LoadingHome from "./LoadingHome";
 import { Link } from "react-router-dom";
 import SearchBar from "../components/searchBar";
 import { useState } from "react";
+import Error from "./ErrorConnection";
 
 export default function Home() {
   const dispatch = useDispatch();
   const dogs = useSelector(state => state.showDogs);
+  const err = useSelector(state => state.error);
   const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
@@ -47,11 +49,12 @@ export default function Home() {
       dispatch(getFiltered(msg));
     }
   }
-
   return (
     <div className={H.general}>
       <hr />
-      {!dogs.length ? (
+      {err == "error" ? (
+        <Error />
+      ) : !dogs.length ? (
         <div className={H.loadingContainer}>
           <LoadingHome />
         </div>

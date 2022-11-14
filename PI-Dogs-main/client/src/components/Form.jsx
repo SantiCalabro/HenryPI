@@ -10,6 +10,10 @@ export default function Form() {
   const breeds = useSelector(state => state.showBreeds);
   const temperaments = useSelector(state => state.showTemperaments);
   const dispatch = useDispatch();
+  const breedNames = Object.values(breeds).map(el => el.name);
+  const select = new Set(breedNames);
+
+  const unrepeated = Array.from(select).filter(el => el !== "No breed");
 
   const [disable, setDisable] = useState({
     submit: true,
@@ -20,7 +24,7 @@ export default function Form() {
   const [error, setError] = useState({});
   const initialState = {
     name: "",
-    breedGroup: "",
+    breedGroup: "No breed",
     image: "",
     minYearsOfLife: "",
     maxYearsOfLife: "",
@@ -32,7 +36,7 @@ export default function Form() {
   };
   const [input, setInput] = useState({
     name: "",
-    breedGroup: "",
+    breedGroup: "No breed",
     image: "",
     minYearsOfLife: "",
     maxYearsOfLife: "",
@@ -102,7 +106,7 @@ export default function Form() {
       input.minHeight > input.maxHeight ||
       input.minHeight === input.maxHeight
     ) {
-      errors.height = "*Max height must be greater than Min height";
+      errors.height = "*Max height must be greater than Min";
     }
     if (!input.minWeight || !input.minWeight) {
       errors.weight = "*Weight is required";
@@ -112,7 +116,7 @@ export default function Form() {
       input.minWeight > input.maxWeight ||
       input.minWeight === input.maxWeight
     ) {
-      errors.weight = "*Max Weight must be greater than Min weight";
+      errors.weight = "*Max weight must be greater than Min weight";
     }
 
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
@@ -173,6 +177,7 @@ export default function Form() {
         [e.target.name]: e.target.value,
       })
     );
+    console.log(e.target.value);
   }
 
   function handleSubmit(e) {
@@ -196,7 +201,7 @@ export default function Form() {
         </>
       )}
 
-      <form onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={e => handleSubmit(e)} autoComplete="off">
         <div className={F.NameAndBreed}>
           <div className={F.NameCont}>
             <input
@@ -206,6 +211,7 @@ export default function Form() {
               onChange={e => handleChange(e)}
               onBlur={e => handleChange(e)}
               placeholder="Name"
+              className={F.name}
             />
             {!error.name ? null : (
               <span className={F.errorName}>{error.name}</span>
@@ -217,14 +223,14 @@ export default function Form() {
             <select
               id="breedGroup"
               name="breedGroup"
-              defaultValue={"DEFAULT"}
+              defaultValue={"No Breed"}
               onChange={e => handleChange(e)}
               onBlur={e => handleChange(e)}
             >
-              <option value="DEFAULT">No Breed</option>
+              <option value="No Breed">No Breed</option>
               {breeds
-                ? breeds.map(el => {
-                    return <option key={el.id}>{el.name}</option>;
+                ? unrepeated.map(el => {
+                    return <option key={el}>{el}</option>;
                   })
                 : "no breeds"}
             </select>
@@ -302,7 +308,7 @@ export default function Form() {
             onBlur={e => handleChange(e)}
           />
           {!error.height ? null : (
-            <span className={F.errorWeight}>{error.height}</span>
+            <span className={F.errorHeight}>{error.height}</span>
           )}
         </div>
         <div className={F.url}>

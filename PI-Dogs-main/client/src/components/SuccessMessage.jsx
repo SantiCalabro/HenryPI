@@ -15,7 +15,7 @@ export default function SuccessMessage() {
     <>
       {active === false && (
         <div className={S.container}>
-          <Link to="/home">
+          <Link to="/created">
             <p className={S.createdBtn}>Visit your new friends</p>
           </Link>
           <p onClick={() => setHide()} className={S.btn}>

@@ -5,6 +5,7 @@ const initialState = {
   showTemperaments: [],
   showBreeds: [],
   created: [],
+  error: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -29,7 +30,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         showTemperaments: action.payload,
       };
-
+    case "SET_ERROR":
+      return {
+        ...state,
+        error: "error",
+      };
     case "GET_FILTERED":
       return {
         ...state,
