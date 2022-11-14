@@ -89,11 +89,13 @@ export default function Form() {
     } else if (!regexName.test(input.name)) {
       errors.name = "*Name is invalid";
     }
+
     if (!input.image) {
       errors.image = "*Image is required";
     } else if (!regexUrl.test(input.image)) {
       errors.image = "*It must be an URL";
     }
+
     if (!input.minHeight || !input.maxHeight) {
       errors.height = "*Height is required";
     } else if (input.minHeight < 0 || input.maxHeight < 0) {
@@ -104,15 +106,18 @@ export default function Form() {
     ) {
       errors.height = "*Max height must be bigger";
     }
-    if (!input.minWeight || !input.minWeight) {
+
+    if (!input.minWeight || !input.maxWeight) {
       errors.weight = "*Weight is required";
     } else if (input.minWeight < 0 || input.maxWeight < 0) {
       errors.weight = "*Weight must be a positive number";
-    } else if (
-      input.minWeight > input.maxWeight ||
+    }
+
+    if (
+      input.maxWeight < input.minWeight ||
       input.minWeight === input.maxWeight
     ) {
-      errors.weight = "*Max weight must be bigger";
+      errors.weight = "*Max Weight must be bigger";
     }
 
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
@@ -166,6 +171,9 @@ export default function Form() {
   }
 
   function handleChange(e) {
+    console.log(e);
+    console.log(e.target.name);
+    console.log(e.target.value);
     setInput({ ...input, [e.target.name]: e.target.value });
     setError(
       validate({
