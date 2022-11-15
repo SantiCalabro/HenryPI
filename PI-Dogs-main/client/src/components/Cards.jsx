@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { getFiltered } from "../redux/actions";
 import notFound from "../statics/notfound.png";
+import notDogs from "../statics/notfound.png";
 export default function Cards() {
   const dogs = useSelector(state => state.showDogs);
   const filtered = useSelector(state => state.filteredDogs);
@@ -68,7 +69,7 @@ export default function Cards() {
           <div className={C.notFound}>
             <img src={notFound} alt="" />
           </div>
-        ) : (
+        ) : currentItems.length > 0 ? (
           currentItems.map(el => (
             <div key={el.id}>
               <Card
@@ -86,6 +87,8 @@ export default function Cards() {
               />
             </div>
           ))
+        ) : (
+          <img className={C.notDogs} src={notDogs}></img>
         )}
       </div>
       <div>

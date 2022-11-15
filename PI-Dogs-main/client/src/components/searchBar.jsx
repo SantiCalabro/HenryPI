@@ -1,12 +1,14 @@
 import React from "react";
 import S from "../styles/searchBar.module.css";
+import { useSelector } from "react-redux";
 
-export default function searchBar(props) {
+export default function SearchBar(props) {
+  const lang = useSelector(state => state.language);
   return (
     <div>
       <input
         type="text"
-        placeholder="Search your dog"
+        placeholder={lang === "English" ? "Search a dog" : "Busca un perro"}
         className={S.search}
         onChange={e => props.handleSearch(e)}
       />

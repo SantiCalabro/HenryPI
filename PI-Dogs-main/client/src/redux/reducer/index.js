@@ -6,6 +6,7 @@ const initialState = {
   showBreeds: [],
   created: [],
   error: {},
+  language: "English",
 };
 
 function rootReducer(state = initialState, action) {
@@ -24,6 +25,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         showBreeds: action.payload,
+      };
+    case "SET_LANGUAGE":
+      return {
+        ...state,
+        language: action.payload,
       };
     case "SHOW_TEMPS":
       return {

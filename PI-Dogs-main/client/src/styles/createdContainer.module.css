@@ -4,20 +4,41 @@
   display: flex;
 }
 .title, .subtitle {
-    position: relative;
-    top: 130px;
-    right: 980px;
-    font-size: 30px;
+    position: absolute;
+    right: 920px;
     z-index: 500;
     color: #fff;
 }
 .subtitle{
     font-size: 20px;
+    left: 80px;
     z-index: 501;
-
+    margin-top: 180px;
 }
 
+.title{
+  font-size: 30px;
+  z-index: 501;
+  margin-top: 130px;
+}
 
+.subtitleEsp{
+position: absolute;
+margin-top: 180px;
+margin-left: 30px;
+color: #fff;
+left: 20px;
+z-index: 501;
+font-size: 20px;
+}
+.titleEsp{
+  position: absolute;
+  margin-top: 130px;
+  color: #fff;
+  left: 50px;
+  z-index: 501;
+  font-size: 28px;
+}
 .pic{
   width: 65%;
   position: absolute;

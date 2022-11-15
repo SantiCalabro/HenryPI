@@ -74,3 +74,10 @@ color: white;
     position: relative;
     top: 60px;
 }
+
+.notDogs{
+    position: absolute;
+    margin-left: 20%;
+    margin-top: 60px;
+    
+}

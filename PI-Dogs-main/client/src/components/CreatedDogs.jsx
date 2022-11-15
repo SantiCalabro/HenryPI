@@ -9,6 +9,7 @@ import errorPic from "../statics/404.png";
 export default function CreatedDogs() {
   const dispatch = useDispatch();
   const created = useSelector(state => state.created);
+  const lang = useSelector(state => state.language);
   React.useEffect(() => {
     dispatch(getCreated());
   }, []);
@@ -37,9 +38,16 @@ export default function CreatedDogs() {
         ) : (
           <div className={Cr.errorContainer}>
             <img className={Cr.errorPic} src={errorPic} alt="" />
-            <h1 className={Cr.title}>You haven't posted any new dog yet</h1>
+            <h1 className={Cr.title}>
+              {" "}
+              {lang === "English"
+                ? "You haven't posted any new dog yet "
+                : "No has creado ningún perro todavía"}{" "}
+            </h1>
             <Link to="/create">
-              <button className={Cr.btn}>Do it now!</button>
+              <button className={Cr.btn}>
+                {lang === "English" ? "Do it now!" : "Hazlo ahora!"}
+              </button>
             </Link>
           </div>
         )}

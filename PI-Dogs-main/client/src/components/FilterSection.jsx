@@ -3,10 +3,12 @@ import F from "../styles/FilterSection.module.css";
 import { getFiltered, showDogs, clearFilter } from "../redux/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import filter from "../statics/filter.png";
+import { useState } from "react";
 
 export default function FilterSection() {
   const dogs = useSelector(state => state.showDogs);
   const breeds = useSelector(state => state.showBreeds);
+  const lang = useSelector(state => state.language);
   const temperaments = useSelector(state => state.showTemperaments);
   const dispatch = useDispatch();
 
@@ -53,6 +55,9 @@ export default function FilterSection() {
 
   function handleFilterBreed(e) {
     dispatch(clearFilter());
+    if (e.target.value === "DEFAULT") {
+      return dispatch(getFiltered(dogs));
+    }
     const filter = dogs.filter(el => el.breedGroup == e.target.value);
 
     dispatch(getFiltered(filter));
@@ -71,7 +76,7 @@ export default function FilterSection() {
             className={F.tempSelector}
           >
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
-              Breed Group
+              {lang === "English" ? "  Breed Group" : "Raza"}
             </option>
             {unrepeated &&
               unrepeated.map(el => {
@@ -87,14 +92,18 @@ export default function FilterSection() {
             className={F.tempSelector}
           >
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
-              Temperament
+              {lang === "English" ? "Temperament" : "Temperamento"}
             </option>
             {temperaments &&
               temperaments.map(el => {
                 return <option key={el.id}>{el.name}</option>;
               })}
           </select>
-          <p className={F.orderTitle}>Order alphabetically</p>
+          <p className={F.orderTitle}>
+            {lang === "English"
+              ? "Order alphabetically "
+              : "Por orden alfabético"}{" "}
+          </p>
           <div className={F.orderBtn}>
             <span className={F.order} onClick={e => handleSort(e)}>
               A-Z

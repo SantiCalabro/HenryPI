@@ -9,7 +9,6 @@ export default function Tags(props) {
 
   const toggleClass = e => {
     const currentState = state.active;
-    // setState({ ...state, clicks: state.clicks + 1 });
     if (props.temperaments.length < 3) {
       setState({ ...state, active: !currentState });
       props.setTemp(e);

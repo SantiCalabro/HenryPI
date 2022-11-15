@@ -4,14 +4,24 @@ import errorGif from "../statics/floating.gif";
 import ship from "../statics/ship.png";
 import { Link } from "react-router-dom";
 import errorBowl from "../statics/404.png";
+import { useSelector } from "react-redux";
 
 export default function Error() {
+  const lang = useSelector(state => state.language);
   return (
     <div>
       <img src={errorBowl} className={E.errorBowl} alt="" />
-      <p className={E.sentence}>Seems you're lost!</p>
+      {lang === "English" ? (
+        <p className={E.sentence}>Seems you're lost!</p>
+      ) : (
+        <p className={E.sentence}>Parece que te perdiste!</p>
+      )}
       <Link to="/home">
-        <span className={E.button}>Return to the ship</span>
+        {lang === "English" ? (
+          <span className={E.button}>Return to the ship</span>
+        ) : (
+          <span className={E.button}>Regresa a la nave</span>
+        )}
       </Link>
       <div className={E.imgContainer}>
         <img className={E.ship} src={ship} alt="" />

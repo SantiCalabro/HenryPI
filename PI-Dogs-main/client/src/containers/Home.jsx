@@ -12,6 +12,7 @@ import H from "../styles/Home.module.css";
 import sidePic from "../statics/astronaut.png";
 import barkSound from "../statics/bark.mp3";
 import createBtn from "../statics/createBtn.png";
+import globe from "../statics/globe.png";
 import LoadingHome from "./LoadingHome";
 import { Link } from "react-router-dom";
 import SearchBar from "../components/searchBar";
@@ -22,7 +23,9 @@ export default function Home() {
   const dispatch = useDispatch();
   const dogs = useSelector(state => state.showDogs);
   const err = useSelector(state => state.error);
+  const lang = useSelector(state => state.language);
   const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState(false);
 
   React.useEffect(() => {
     dispatch(showDogs());
@@ -34,6 +37,7 @@ export default function Home() {
   var audio = new Audio(barkSound);
 
   function handleClick() {
+    setActive(true);
     audio.play();
   }
 
@@ -61,14 +65,27 @@ export default function Home() {
       ) : (
         <div>
           <div className={H.picPointer} onClick={() => handleClick()}></div>
+          <div
+            className={active === true ? H.hidden : H.globe}
+            onClick={() => handleClick()}
+          >
+            {lang === "English" ? (
+              <h3 className={active === true ? H.hidden : H.globeMsg}>
+                Click me!
+              </h3>
+            ) : (
+              <h3 className={active === true ? H.hidden : H.globeMsg}>
+                Clickeame!
+              </h3>
+            )}
+            <img className={H.globe} src={globe} alt="" />
+          </div>
+
           <img src={sidePic} alt="" className={H.sidePic} />
 
           <div>
             <div className={H.SearchBar}>
               <SearchBar handleSearch={handleSearch} />
-              <Link to="/created" style={{ textDecoration: "none" }}>
-                <h4 className={H.created}>Created dogs</h4>
-              </Link>
             </div>
             <Link to="/create">
               <img src={createBtn} alt="" className={H.createBtn} />

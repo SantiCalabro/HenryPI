@@ -7,6 +7,7 @@ import Error from "./ErrorConnection";
 
 export default function CreatedContainer() {
   const err = useSelector(state => state.error);
+  const lang = useSelector(state => state.language);
   return (
     <>
       {err == "error" ? (
@@ -17,8 +18,26 @@ export default function CreatedContainer() {
             <Created />
             <hr />
             <div className={CrCont.container}>
-              <h1 className={CrCont.title}>These are your new friends!</h1>
-              <p className={CrCont.subtitle}>Know them all!</p>
+              {lang === "English" ? (
+                <>
+                  <div className={CrCont.titleContainer}>
+                    <h1 className={CrCont.title}>
+                      These are the dogs created so far!
+                    </h1>
+                    <p className={CrCont.subtitle}>Know them all!</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <div className={CrCont.titleContainer}>
+                    <h1 className={CrCont.titleEsp}>
+                      Estos son los perros creados hasta ahora!
+                    </h1>
+                    <p className={CrCont.subtitleEsp}>Conocelos a todos!</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

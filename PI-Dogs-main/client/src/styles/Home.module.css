@@ -48,6 +48,7 @@ hr{
     display: flex;
     top: 65px;   
     right: 60px;
+    margin-bottom:30px
 }
 
 .picPointer{
@@ -60,20 +61,33 @@ margin-top: 350px;
 left: 100px;
 cursor: pointer;
 }
-.created{
-    position: relative;
-    top: 50px;
-    color: #fff;
-    right: 50px;
-    padding-left: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-right: 10px;
-    border: 1px solid #fff;
-    border-radius: 20px;
+ 
+.globe{
+    z-index: 200;
+    width: 140px;
+    display: flex;
+    rotate: -5deg;
+    cursor: pointer;
+    position: absolute;
+    margin-top: 190px;
+    left: 100px;
+}
+.globeMsg{
+    position: absolute;
+    color: #0E0040;
+    font-weight: 600;
+    rotate: -5deg;
+    margin-top: 220px;
+    z-index:210;
+    left: 130px;
+    font-size: 16px;
+    width: 100%;
     cursor: pointer;
 }
-.created:hover{
-    border: solid 1px orangered;
-    transition: 0.15s ease-in-out;
+.globeMsg:hover{
+    color: orangered;
+    transition: 0.15s;
+}
+.hidden{
+    display: none;
 }
