@@ -5,6 +5,7 @@ import D from "../styles/Detail.module.css";
 import CatchError from "./Error";
 import LoadingHome from "./LoadingHome";
 import Error from "./ErrorConnection";
+import editBtn from "../statics/edit.png";
 
 export default function DogDetail(props) {
   const dispatch = useDispatch();
@@ -34,13 +35,22 @@ export default function DogDetail(props) {
                   {lang === "English" ? (
                     <h4 className={D.tempTitle}>Temperament</h4>
                   ) : (
-                    <h4 className={D.tempTitle}>Temperamento</h4>
+                    <h4 className={D.tempTitleEsp}>Temperamento</h4>
                   )}
                   <div className={D.hashtags}>
                     <p className={D.temperament}>
                       {typeof el.temperaments[0] === "string"
-                        ? el.temperaments.map(el => <span> {el}, </span>)
-                        : el.temperaments.map(el => <span> {el.name}, </span>)}
+                        ? el.temperaments.map((el, i) => (
+                            <span key={i}>
+                              {el}
+                              {dog[0].temperaments.length - 1 === i ? null : (
+                                <span>, </span>
+                              )}
+                            </span>
+                          ))
+                        : el.temperaments.map((el, i) => (
+                            <span key={i}> {el.name}, </span>
+                          ))}
                     </p>
                   </div>
                 </div>
@@ -58,6 +68,7 @@ export default function DogDetail(props) {
                 </div>
                 {lang === "English" ? (
                   <>
+                    <img className={D.editBtn} src={editBtn} alt="" />
                     <p className={D.name}>{el.name}</p>
 
                     <h4 className={D.averages}>Averages</h4>
@@ -87,20 +98,20 @@ export default function DogDetail(props) {
 
                     <h4 className={D.averages}>Promedios</h4>
                     <p className={D.yearsTitle}>Años de vida:</p>
-                    <p className={D.years}>
+                    <p className={D.yearsEsp}>
                       {el.minYearsOfLife && el.maxYearsOfLife
                         ? el.minYearsOfLife + "-" + el.maxYearsOfLife + " años"
                         : el.minYearsOfLife + " años"}
                     </p>
                     <p className={D.weightTitle}>Peso:</p>
-                    <p className={D.weight}>
+                    <p className={D.weightEsp}>
                       {el.minWeight && el.maxWeight
                         ? el.minWeight + "-" + el.maxWeight + " libras"
                         : el.minWeight + " libras"}
                     </p>
 
                     <p className={D.heightTitle}>Altura:</p>
-                    <p className={D.height}>
+                    <p className={D.heightEsp}>
                       {el.minHeight && el.maxHeight
                         ? el.minHeight + "-" + el.maxHeight + " pies"
                         : el.minHeight + " pies"}

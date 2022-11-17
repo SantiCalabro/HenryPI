@@ -18,7 +18,7 @@ export default function FormContainer() {
 
   return (
     <div>
-      {err == "error" ? (
+      {err === "error" ? (
         <Error />
       ) : (
         <>

@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Tags from "./Tags";
-import { postDog } from "../redux/actions";
+import { postDog, showDogs } from "../redux/actions";
 import F from "../styles/Form.module.css";
 import { useState } from "react";
 import SuccessMessage from "./SuccessMessage";
 
 export default function Form() {
   const breeds = useSelector(state => state.showBreeds);
+  const dogs = useSelector(state => state.showDogs);
   const temperaments = useSelector(state => state.showTemperaments);
   const lang = useSelector(state => state.language);
   const dispatch = useDispatch();
@@ -48,6 +49,10 @@ export default function Form() {
     temperaments: [],
   });
 
+  React.useEffect(() => {
+    dispatch(showDogs());
+  }, []);
+
   function setTemp(e) {
     setClicks(clicks + 1);
 
@@ -85,6 +90,8 @@ export default function Form() {
   }
 
   function validate(input) {
+    const taken = dogs.find(el => el.name === input.name);
+    console.log(taken);
     const errors = {};
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     const regexUrl =
@@ -98,6 +105,10 @@ export default function Form() {
       lang === "English"
         ? (errors.name = "*Name is invalid")
         : (errors.name = "*El nombre es inválido");
+    } else if (taken) {
+      lang === "English"
+        ? (errors.name = "*Ups! This name already exists")
+        : (errors.name = "*Ups! Ese nombre ya existe");
     }
 
     if (!input.image) {
@@ -119,8 +130,8 @@ export default function Form() {
         ? (errors.height = "*Height must be a positive number")
         : (errors.height = "*La altura debe ser un número positivo");
     } else if (
-      input.minHeight > input.maxHeight ||
-      input.minHeight === input.maxHeight
+      Number(input.minHeight) > Number(input.maxHeight) ||
+      Number(input.minHeight) === Number(input.maxHeight)
     ) {
       lang === "English"
         ? (errors.height = "*Max height must be bigger")
@@ -138,8 +149,8 @@ export default function Form() {
     }
 
     if (
-      input.maxWeight < input.minWeight ||
-      input.minWeight === input.maxWeight
+      Number(input.maxWeight) < Number(input.minWeight) ||
+      Number(input.minWeight) === Number(input.maxWeight)
     ) {
       lang === "English"
         ? (errors.weight = "*Max Weight must be bigger")
@@ -155,15 +166,16 @@ export default function Form() {
         ? (errors.yearsOfLife = "*Years of life must be a positive number")
         : (errors.yearsOfLife = "*Los años deben ser números positivos");
     } else if (
-      input.minYearsOfLife > input.maxYearsOfLife ||
-      input.minYearsOfLife === input.maxYearsOfLife
+      Number(input.minYearsOfLife) > Number(input.maxYearsOfLife) ||
+      Number(input.minYearsOfLife) === Number(input.maxYearsOfLife)
     ) {
       lang === "English"
         ? (errors.yearsOfLife = "*Max years of life must be bigger")
         : (errors.yearsOfLife = "*El año máximo debe ser mayor");
-    } else if (
-      input.minYearsOfLife === parseInt(input.minYearsOfLife, 10) ||
-      input.maxYearsOfLife === parseInt(input.maxYearsOfLife, 10)
+    }
+    if (
+      Number(input.minYearsOfLife) !== parseInt(input.minYearsOfLife, 10) ||
+      Number(input.maxYearsOfLife) !== parseInt(input.maxYearsOfLife, 10)
     ) {
       lang === "English"
         ? (errors.yearsOfLife = "*Years of life must be an integer number")
@@ -206,15 +218,24 @@ export default function Form() {
     setInput({ ...initialState });
   }
 
-  function handleChange(e) {
-    console.log(e.target.value);
-    setInput({ ...input, [e.target.name]: e.target.value });
+  function handleValidate(e) {
     setError(
       validate({
         ...input,
         [e.target.name]: e.target.value,
       })
     );
+  }
+
+  function handleChange(e) {
+    setInput({ ...input, [e.target.name]: e.target.value });
+    // setError(
+    //   validate({
+    //     ...input,
+    //     [e.target.name]: e.target.value,
+    //   })
+    // );
+    // handleValidate(e);
   }
 
   function handleSubmit(e) {
@@ -247,7 +268,7 @@ export default function Form() {
                 id="name"
                 name="name"
                 onChange={e => handleChange(e)}
-                onBlur={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
                 placeholder={lang === "English" ? "Name" : "Nombre"}
                 className={F.name}
               />
@@ -291,7 +312,7 @@ export default function Form() {
                 value={input.minYearsOfLife}
                 name="minYearsOfLife"
                 onChange={e => handleChange(e)}
-                onBlur={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
               />
               <label>Max.</label>
               <input
@@ -300,7 +321,7 @@ export default function Form() {
                 value={input.maxYearsOfLife}
                 name="maxYearsOfLife"
                 onChange={e => handleChange(e)}
-                onBlur={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
               />
             </div>
             {!error.yearsOfLife ? null : (
@@ -320,7 +341,7 @@ export default function Form() {
               value={input.minWeight}
               name="minWeight"
               onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
+              onBlur={e => handleValidate(e)}
             />
             <label>Max.</label>
             <input
@@ -329,7 +350,7 @@ export default function Form() {
               value={input.maxWeight}
               name="maxWeight"
               onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
+              onBlur={e => handleValidate(e)}
             />
             {!error.weight ? null : (
               <span className={F.errorWeight}>{error.weight}</span>
@@ -348,7 +369,7 @@ export default function Form() {
               value={input.minHeight}
               name="minHeight"
               onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
+              onBlur={e => handleValidate(e)}
             />
             <label>Max.</label>
             <input
@@ -357,7 +378,7 @@ export default function Form() {
               value={input.maxHeight}
               name="maxHeight"
               onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
+              onBlur={e => handleValidate(e)}
             />
             {!error.height ? null : (
               <span className={F.errorHeight}>{error.height}</span>
@@ -376,7 +397,7 @@ export default function Form() {
               name="image"
               className={F.inputUrl}
               onChange={e => handleChange(e)}
-              onBlur={e => handleChange(e)}
+              onBlur={e => handleValidate(e)}
             />
             {!error.image ? null : (
               <span className={F.errorUrl}>{error.image}</span>

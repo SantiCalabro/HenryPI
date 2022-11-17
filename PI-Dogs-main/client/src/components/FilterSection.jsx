@@ -9,23 +9,15 @@ export default function FilterSection() {
   const dogs = useSelector(state => state.showDogs);
   const breeds = useSelector(state => state.showBreeds);
   const lang = useSelector(state => state.language);
+  const filtrados = useSelector(state => state.filteredDogs);
   const temperaments = useSelector(state => state.showTemperaments);
   const dispatch = useDispatch();
 
+  const [breed, setBreed] = useState("");
+  const [temp, setTemp] = useState("");
   const breedNames = Object.values(breeds).map(el => el.name);
   const select = new Set(breedNames);
   const unrepeated = Array.from(select);
-
-  function handleFilterTemp(e) {
-    dispatch(clearFilter());
-    const filter = dogs.filter(el =>
-      el.temperaments.length > 0
-        ? el.temperaments.includes(e.target.value)
-        : "no dogs"
-    );
-
-    dispatch(getFiltered(filter));
-  }
 
   function handleSort(e) {
     dispatch(clearFilter());
@@ -53,15 +45,63 @@ export default function FilterSection() {
     dispatch(getFiltered(sorted));
   }
 
-  function handleFilterBreed(e) {
+  function handleFilter(e) {
     dispatch(clearFilter());
-    if (e.target.value === "DEFAULT") {
-      return dispatch(getFiltered(dogs));
-    }
-    const filter = dogs.filter(el => el.breedGroup == e.target.value);
 
-    dispatch(getFiltered(filter));
+    if (
+      e.target.value === "DEFAULT" ||
+      temp === "DEFAULT" ||
+      breed === "DEFAULT"
+    ) {
+      dispatch(getFiltered(dogs));
+    } else if (
+      (e.target.id === "breed" && temp === "") ||
+      (e.target.id === "breed" && temp === "DEFAULT")
+    ) {
+      dispatch(clearFilter());
+      const filtered = dogs.filter(el => el.breedGroup == e.target.value);
+      dispatch(getFiltered(filtered));
+    } else if (
+      (e.target.id === "temp" && breed === "") ||
+      (e.target.id === "temp" && breed === "DEFAULT")
+    ) {
+      dispatch(clearFilter());
+      const filtered = dogs.filter(el =>
+        el.temperaments.includes(e.target.value)
+      );
+      dispatch(getFiltered(filtered));
+    }
   }
+
+  React.useEffect(() => {
+    if (
+      breed !== "" &&
+      temp !== "" &&
+      breed !== "DEFAULT" &&
+      temp !== "DEFAULT"
+    ) {
+      dispatch(clearFilter());
+      const filtered = dogs.filter(el => el.breedGroup == breed);
+      const both = filtered.filter(el => el.temperaments.includes(temp));
+
+      dispatch(getFiltered(both));
+    }
+  }, [breed]);
+
+  React.useEffect(() => {
+    if (
+      breed !== "" &&
+      temp !== "" &&
+      breed !== "DEFAULT" &&
+      temp !== "DEFAULT"
+    ) {
+      dispatch(clearFilter());
+      const filtered = dogs.filter(el => el.breedGroup == breed);
+      const both = filtered.filter(el => el.temperaments.includes(temp));
+
+      dispatch(getFiltered(both));
+    }
+  }, [temp]);
 
   return (
     <div>
@@ -71,7 +111,10 @@ export default function FilterSection() {
           <select
             name="breed"
             id="breed"
-            onChange={e => handleFilterBreed(e)}
+            onChange={e => {
+              setBreed(e.target.value);
+              handleFilter(e);
+            }}
             defaultValue={"DEFAULT"}
             className={F.tempSelector}
           >
@@ -87,7 +130,11 @@ export default function FilterSection() {
           <select
             name="temperament"
             id="temp"
-            onChange={e => handleFilterTemp(e)}
+            onChange={e => {
+              setTemp(e.target.value);
+              handleFilter(e);
+              console.log(temp, breed);
+            }}
             defaultValue={"DEFAULT"}
             className={F.tempSelector}
           >

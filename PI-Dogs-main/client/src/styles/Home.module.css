@@ -68,7 +68,7 @@ cursor: pointer;
     display: flex;
     rotate: -5deg;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     margin-top: 190px;
     left: 100px;
 }

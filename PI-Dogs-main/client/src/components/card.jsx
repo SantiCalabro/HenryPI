@@ -10,6 +10,15 @@ export default function Card(props) {
       <Link to={`/detail/${props.id}`} style={{ textDecoration: "none" }}>
         <div className={CardStyle.container}>
           <div className={CardStyle.imgContainer}>
+            {typeof props.id === "string" && (
+              <div>
+                {lang === "English" ? (
+                  <span className={CardStyle.label}>Created</span>
+                ) : (
+                  <span className={CardStyle.label}>Creado</span>
+                )}
+              </div>
+            )}
             <img src={props.image} className={CardStyle.img} alt="" />
           </div>
           <div className={CardStyle.dataContainer}>
@@ -23,15 +32,31 @@ export default function Card(props) {
             </div>
           </div>
           {lang === "English" ? (
-            <p className={CardStyle.life}>
-              Life expectancy: {props.minYearsOfLife} - {props.maxYearsOfLife}{" "}
-              years
-            </p>
+            <>
+              {props.minYearsOfLife && props.maxYearsOfLife ? (
+                <p className={CardStyle.life}>
+                  Life expectancy: {props.minYearsOfLife} -{" "}
+                  {props.maxYearsOfLife} years
+                </p>
+              ) : (
+                <p className={CardStyle.life}>
+                  Life expectancy: {props.minYearsOfLife} years
+                </p>
+              )}
+            </>
           ) : (
-            <p className={CardStyle.life}>
-              Expectativa de vida: {props.minYearsOfLife} -{" "}
-              {props.maxYearsOfLife} años
-            </p>
+            <>
+              {props.minYearsOfLife && props.maxYearsOfLife ? (
+                <p className={CardStyle.life}>
+                  Expectativa de vida: {props.minYearsOfLife} -{" "}
+                  {props.maxYearsOfLife} años
+                </p>
+              ) : (
+                <p className={CardStyle.life}>
+                  Expectativa de vida: {props.minYearsOfLife} años
+                </p>
+              )}
+            </>
           )}
         </div>
       </Link>

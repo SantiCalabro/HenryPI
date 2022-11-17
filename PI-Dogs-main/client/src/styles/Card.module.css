@@ -71,4 +71,16 @@
     float: left;
 }
 
+.label{
+    position: absolute;
+    color: orangered;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: #fff;
+    font-weight: 600;
+    box-shadow:1px 2px 5px 1px rgba(0, 0, 0, 0.1) ;
+    font-size: 14px;
 
+}
