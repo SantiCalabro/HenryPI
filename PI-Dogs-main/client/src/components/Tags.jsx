@@ -4,32 +4,26 @@ import { useState } from "react";
 export default function Tags(props) {
   const [state, setState] = useState({
     active: false,
-    clicks: 0,
   });
 
   const toggleClass = e => {
     const currentState = state.active;
-    if (props.temperaments.length < 3) {
+    props.setTemp(e);
+    if (
+      props.temperaments.length < 3 &&
+      !props.temperaments.includes(e.target.innerText)
+    ) {
       setState({ ...state, active: !currentState });
-      props.setTemp(e);
     }
     if (
       props.temperaments.length === 3 &&
       !props.temperaments.includes(e.target.innerText)
     ) {
       setState({ ...state, active: currentState });
-      props.setTemp(e);
     }
-    if (
-      props.temperaments.length === 3 &&
-      props.temperaments.includes(e.target.innerText)
-    ) {
-      setState({ ...state, active: !currentState });
-      props.handleClear(e);
-    }
+
     if (props.temperaments.includes(e.target.innerText)) {
       setState({ ...state, active: !currentState });
-      props.handleClear(e);
     }
   };
 

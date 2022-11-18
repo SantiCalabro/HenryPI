@@ -52,11 +52,33 @@ export default function Form() {
   React.useEffect(() => {
     dispatch(showDogs());
   }, []);
+  React.useEffect(() => {
+    console.log(input.temperaments);
+    console.log(clicks);
+  }, [clicks]);
 
   function setTemp(e) {
-    setClicks(clicks + 1);
-
-    if (clicks > 2) {
+    const select = input.temperaments.find(el => el === e.target.innerText);
+    if (select) {
+      setClicks(clicks - 1);
+      setInput({
+        ...input,
+        temperaments: input.temperaments.filter(
+          el => !el.includes(e.target.innerText)
+        ),
+      });
+      if (clicks < 4) {
+        lang === "English"
+          ? setError({
+              ...error,
+              temperament: "",
+            })
+          : setError({
+              ...error,
+              temperament: "",
+            });
+      }
+    } else if (input.temperaments.length === 3 && clicks === 3) {
       lang === "English"
         ? setError({
             ...error,
@@ -66,8 +88,17 @@ export default function Form() {
             ...error,
             temperament: "*No puedes seleccionar más de tres temperamentos",
           });
-    }
-    if (input.temperaments.length < 3) {
+    } else if (!select && input.temperaments.length < 3) {
+      setClicks(clicks + 1);
+      lang === "English"
+        ? setError({
+            ...error,
+            temperament: "",
+          })
+        : setError({
+            ...error,
+            temperament: "",
+          });
       handleChange(e);
       setInput({
         ...input,
@@ -234,8 +265,7 @@ export default function Form() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postDog(input));
-
-    setDisable({ ...disable, msg: false, submit: true });
+    setDisable({ ...disable, msg: false, done: true });
     setError({});
     setClicks(0);
     setInput({ ...input, temperaments: [] });
@@ -421,6 +451,7 @@ export default function Form() {
                           handleClear={handleClear}
                           temperaments={input.temperaments}
                           error={error.temperament}
+                          done={disable.done}
                         />
                       );
                     })

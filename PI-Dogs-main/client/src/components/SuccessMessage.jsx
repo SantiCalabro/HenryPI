@@ -9,9 +9,9 @@ export default function SuccessMessage() {
   const [active, setActive] = useState(false);
   const lang = useSelector(state => state.language);
 
-  const setHide = () => {
+  function reRender() {
     setActive(true);
-  };
+  }
 
   return (
     <>
@@ -22,10 +22,8 @@ export default function SuccessMessage() {
               <Link to="/created">
                 <p className={S.createdBtn}>Visit your new friends</p>
               </Link>
-              <Link to="/create">
-                <p onClick={() => setHide()} className={S.btn}>
-                  Create other dog
-                </p>
+              <Link to="/home">
+                <p className={S.btn}>Return to the ship</p>
               </Link>{" "}
             </>
           ) : (
@@ -33,10 +31,8 @@ export default function SuccessMessage() {
               <Link to="/created">
                 <p className={S.createdBtn}>Visita a tus nuevos amigos</p>
               </Link>
-              <Link to="/create">
-                <p onClick={() => setHide()} className={S.btn}>
-                  Crea otro perro
-                </p>
+              <Link to="/home">
+                <p className={S.btn}>Volver a la nave</p>
               </Link>{" "}
             </>
           )}
