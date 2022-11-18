@@ -48,13 +48,14 @@ export default function FilterSection() {
   function handleFilter(e) {
     dispatch(clearFilter());
 
+    // if (
+    //   e.target.value === "DEFAULT" ||
+    //   temp === "DEFAULT" ||
+    //   breed === "DEFAULT"
+    // ) {
+    //   dispatch(getFiltered(dogs));
+
     if (
-      e.target.value === "DEFAULT" ||
-      temp === "DEFAULT" ||
-      breed === "DEFAULT"
-    ) {
-      dispatch(getFiltered(dogs));
-    } else if (
       (e.target.id === "breed" && temp === "") ||
       (e.target.id === "breed" && temp === "DEFAULT")
     ) {
@@ -86,22 +87,16 @@ export default function FilterSection() {
 
       dispatch(getFiltered(both));
     }
-  }, [breed]);
-
-  React.useEffect(() => {
-    if (
-      breed !== "" &&
-      temp !== "" &&
-      breed !== "DEFAULT" &&
-      temp !== "DEFAULT"
-    ) {
-      dispatch(clearFilter());
-      const filtered = dogs.filter(el => el.breedGroup == breed);
-      const both = filtered.filter(el => el.temperaments.includes(temp));
-
-      dispatch(getFiltered(both));
+    if (breed === "DEFAULT" && temp !== "") {
+      const filtered = dogs.filter(el => el.temperaments.includes(temp));
+      dispatch(getFiltered(filtered));
     }
-  }, [temp]);
+
+    if (temp === "DEFAULT" && breed !== "") {
+      const filtered = dogs.filter(el => el.breedGroup == breed);
+      dispatch(getFiltered(filtered));
+    }
+  }, [breed, temp]);
 
   return (
     <div>

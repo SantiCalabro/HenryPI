@@ -52,10 +52,6 @@ export default function Form() {
   React.useEffect(() => {
     dispatch(showDogs());
   }, []);
-  React.useEffect(() => {
-    console.log(input.temperaments);
-    console.log(clicks);
-  }, [clicks]);
 
   function setTemp(e) {
     const select = input.temperaments.find(el => el === e.target.innerText);
