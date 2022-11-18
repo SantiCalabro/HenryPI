@@ -1,14 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Tags from "./Tags";
-import { postDog, showDogs } from "../redux/actions";
-import F from "../styles/Form.module.css";
+import {
+  showDogs,
+  showTemperaments,
+  showBreeds,
+  dogUpdate,
+} from "../redux/actions";
+import EF from "../styles/EditForm.module.css";
 import { useState } from "react";
-import SuccessMessage from "./SuccessMessage";
+import SuccessUpdate from "./SuccessUpdate";
 
-export default function Form() {
+export default function EditForm(props) {
   const breeds = useSelector(state => state.showBreeds);
   const dogs = useSelector(state => state.showDogs);
+  const dogDetail = useSelector(state => state.dogDetail);
+  const id = dogDetail[0].id;
   const temperaments = useSelector(state => state.showTemperaments);
   const lang = useSelector(state => state.language);
   const dispatch = useDispatch();
@@ -51,6 +58,8 @@ export default function Form() {
 
   React.useEffect(() => {
     dispatch(showDogs());
+    dispatch(showTemperaments());
+    dispatch(showBreeds());
   }, []);
 
   function setTemp(e) {
@@ -91,7 +100,6 @@ export default function Form() {
 
   function validate(input) {
     const taken = dogs.find(el => el.name === input.name);
-    console.log(taken);
     const errors = {};
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     const regexUrl =
@@ -233,7 +241,7 @@ export default function Form() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(postDog(input));
+    dispatch(dogUpdate(id, input));
 
     setDisable({ ...disable, msg: false, submit: true });
     setError({});
@@ -246,168 +254,182 @@ export default function Form() {
     <div>
       {disable.msg === false && (
         <>
-          <div className={F.popUp}>
-            <SuccessMessage />
+          <div className={EF.popUp}>
+            <SuccessUpdate />
           </div>
         </>
       )}
 
-      <div className={F.formContainer}>
+      <div className={EF.formContainer}>
+        <h1 className={EF.title}>Edit {props.name}</h1>
         <form onSubmit={e => handleSubmit(e)} autoComplete="off">
-          <div className={F.NameAndBreed}>
-            <div className={F.NameCont}>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                onChange={e => handleChange(e)}
-                onBlur={e => handleValidate(e)}
-                placeholder={lang === "English" ? "Name" : "Nombre"}
-                className={F.name}
-              />
-              {!error.name ? null : (
-                <>
-                  <span className={F.errorName}>{error.name}</span>
-                </>
+          <div className={EF.data}>
+            <div className={EF.NameAndBreed}>
+              <div className={EF.NameCont}>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  onChange={e => handleChange(e)}
+                  onBlur={e => handleValidate(e)}
+                  placeholder={props.name}
+                  className={EF.name}
+                />
+                {!error.name ? null : (
+                  <>
+                    <span className={EF.errorName}>{error.name}</span>
+                  </>
+                )}
+              </div>
+
+              <div className={EF.BreedCont}>
+                <label>Breed</label>
+                <select
+                  style={{ width: "150px", marginLeft: "10px" }}
+                  id="breedGroup"
+                  name="breedGroup"
+                  defaultValue={"No Breed"}
+                  onChange={e => handleChange(e)}
+                  onBlur={e => handleChange(e)}
+                >
+                  <option value="No breed">No breed</option>
+                  {breeds
+                    ? unrepeated.map(el => {
+                        return <option key={el}>{el}</option>;
+                      })
+                    : "no breeds"}
+                </select>
+              </div>
+            </div>
+
+            <div className={EF.yearsContainer}>
+              {lang === "English" ? (
+                <h4>Years of life</h4>
+              ) : (
+                <h4>Años de vida</h4>
+              )}
+              <div className={EF.values}>
+                <label>Min.</label>
+                <input
+                  type="number"
+                  id="minYearsOfLife"
+                  value={input.minYearsOfLife}
+                  name="minYearsOfLife"
+                  onChange={e => handleChange(e)}
+                  onBlur={e => handleValidate(e)}
+                  placeholder={props.minYears}
+                />
+                <label>Max.</label>
+                <input
+                  type="number"
+                  id="maxYearsOfLife"
+                  value={input.maxYearsOfLife}
+                  name="maxYearsOfLife"
+                  onChange={e => handleChange(e)}
+                  onBlur={e => handleValidate(e)}
+                  placeholder={props.maxYears}
+                />
+              </div>
+              {!error.yearsOfLife ? null : (
+                <div className={EF.errorYearsCont}>
+                  <span className={EF.errorYears}>{error.yearsOfLife}</span>
+                </div>
               )}
             </div>
-
-            <div className={F.BreedCont}>
-              <label>Breed</label>
-              <select
-                id="breedGroup"
-                name="breedGroup"
-                defaultValue={"No Breed"}
-                onChange={e => handleChange(e)}
-                onBlur={e => handleChange(e)}
-              >
-                <option value="No breed">No breed</option>
-                {breeds
-                  ? unrepeated.map(el => {
-                      return <option key={el}>{el}</option>;
-                    })
-                  : "no breeds"}
-              </select>
-            </div>
-          </div>
-
-          <div className={F.yearsContainer}>
-            {lang === "English" ? (
-              <h4>Years of life</h4>
-            ) : (
-              <h4>Años de vida</h4>
-            )}
-            <div className={F.values}>
+            <div className={EF.weightContainer}>
+              {lang === "English" ? (
+                <h4>Average weight</h4>
+              ) : (
+                <h4>Peso promedio</h4>
+              )}
               <label>Min.</label>
               <input
                 type="number"
-                id="minYearsOfLife"
-                value={input.minYearsOfLife}
-                name="minYearsOfLife"
+                id="minWeight"
+                value={input.minWeight}
+                name="minWeight"
                 onChange={e => handleChange(e)}
                 onBlur={e => handleValidate(e)}
+                placeholder={props.minWeight}
               />
               <label>Max.</label>
               <input
                 type="number"
-                id="maxYearsOfLife"
-                value={input.maxYearsOfLife}
-                name="maxYearsOfLife"
+                id="maxWeight"
+                value={input.maxWeight}
+                name="maxWeight"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
+                placeholder={props.maxWeight}
+              />
+              {!error.weight ? null : (
+                <div className={EF.errorWeightCont}>
+                  <span className={EF.errorWeight}>{error.weight}</span>
+                </div>
+              )}
+            </div>
+            <div className={EF.heightContainer}>
+              {lang === "English" ? (
+                <h4>Average height</h4>
+              ) : (
+                <h4>Altura promedio</h4>
+              )}
+              <label>Min.</label>
+              <input
+                type="number"
+                id="minHeight"
+                value={input.minHeight}
+                name="minHeight"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
+                placeholder={props.minHeight}
+              />
+              <label>Max.</label>
+              <input
+                type="number"
+                id="maxHeight"
+                value={input.maxHeight}
+                name="maxHeight"
+                onChange={e => handleChange(e)}
+                onBlur={e => handleValidate(e)}
+                placeholder={props.maxHeight}
+              />
+              {!error.height ? null : (
+                <span className={EF.errorHeight}>{error.height}</span>
+              )}
+            </div>
+            <div className={EF.url}>
+              {lang === "English" ? (
+                <h4>Upload an image</h4>
+              ) : (
+                <h4>Carga una imagen</h4>
+              )}
+              <input
+                id="image"
+                type="text"
+                value={input.image}
+                name="image"
+                className={EF.inputUrl}
                 onChange={e => handleChange(e)}
                 onBlur={e => handleValidate(e)}
               />
+              {!error.image ? null : (
+                <span className={EF.errorUrl}>{error.image}</span>
+              )}
             </div>
-            {!error.yearsOfLife ? null : (
-              <span className={F.errorYears}>{error.yearsOfLife}</span>
-            )}
-          </div>
-          <div className={F.weightContainer}>
-            {lang === "English" ? (
-              <h4>Average weight</h4>
-            ) : (
-              <h4>Peso promedio</h4>
-            )}
-            <label>Min.</label>
-            <input
-              type="number"
-              id="minWeight"
-              value={input.minWeight}
-              name="minWeight"
-              onChange={e => handleChange(e)}
-              onBlur={e => handleValidate(e)}
-            />
-            <label>Max.</label>
-            <input
-              type="number"
-              id="maxWeight"
-              value={input.maxWeight}
-              name="maxWeight"
-              onChange={e => handleChange(e)}
-              onBlur={e => handleValidate(e)}
-            />
-            {!error.weight ? null : (
-              <span className={F.errorWeight}>{error.weight}</span>
-            )}
-          </div>
-          <div className={F.heightContainer}>
-            {lang === "English" ? (
-              <h4>Average height</h4>
-            ) : (
-              <h4>Altura promedio</h4>
-            )}
-            <label>Min.</label>
-            <input
-              type="number"
-              id="minHeight"
-              value={input.minHeight}
-              name="minHeight"
-              onChange={e => handleChange(e)}
-              onBlur={e => handleValidate(e)}
-            />
-            <label>Max.</label>
-            <input
-              type="number"
-              id="maxHeight"
-              value={input.maxHeight}
-              name="maxHeight"
-              onChange={e => handleChange(e)}
-              onBlur={e => handleValidate(e)}
-            />
-            {!error.height ? null : (
-              <span className={F.errorHeight}>{error.height}</span>
-            )}
-          </div>
-          <div className={F.url}>
-            {lang === "English" ? (
-              <h4>Upload an image</h4>
-            ) : (
-              <h4>Carga una imagen</h4>
-            )}
-            <input
-              id="image"
-              type="text"
-              value={input.image}
-              name="image"
-              className={F.inputUrl}
-              onChange={e => handleChange(e)}
-              onBlur={e => handleValidate(e)}
-            />
-            {!error.image ? null : (
-              <span className={F.errorUrl}>{error.image}</span>
-            )}
           </div>
           {lang === "English" ? (
-            <label className={F.label}>Choose up to three temperaments</label>
+            <label className={EF.label}>Choose up to three temperaments</label>
           ) : (
-            <label className={F.label}>Elige hasta tres temperamentos</label>
+            <label className={EF.label}>Elige hasta tres temperamentos</label>
           )}
-          <div className={F.tempContainer}>
+          <div className={EF.tempContainer}>
             {!error.temperament ? null : (
-              <span className={F.errorTemp}>{error.temperament}</span>
+              <span className={EF.errorTemp}>{error.temperament}</span>
             )}
 
-            <div className={F.tagsArea}>
-              <div className={F.tags}>
+            <div className={EF.tagsArea}>
+              <div className={EF.tags}>
                 {temperaments
                   ? temperaments.map(el => {
                       return (
@@ -431,7 +453,7 @@ export default function Form() {
           {lang === "Englis" ? (
             <button
               type="submit"
-              className={disable.submit === true ? F.submitBtn : F.btnActive}
+              className={disable.submit === true ? EF.submitBtn : EF.btnActive}
               disabled={disable.submit}
             >
               Create your dog!
@@ -439,10 +461,10 @@ export default function Form() {
           ) : (
             <button
               type="submit"
-              className={disable.submit === true ? F.submitBtn : F.btnActive}
+              className={disable.submit === true ? EF.submitBtn : EF.btnActive}
               disabled={disable.submit}
             >
-              Crea tu perro!
+              Update your dog!
             </button>
           )}
         </form>

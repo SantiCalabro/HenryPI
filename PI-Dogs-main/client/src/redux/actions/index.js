@@ -51,6 +51,25 @@ export const postDog = payload => async dispatch => {
   }
 };
 
+export const dogUpdate = (id, payload) => async dispatch => {
+  try {
+    const res = await axios.put(`http://localhost:3001/dogs?id=${id}`, payload);
+    return dispatch({ type: "DOG_UPDATE", payload: res.data });
+  } catch {
+    return dispatch({ type: "SET_ERROR" });
+  }
+};
+
+export const dogDelete = id => async dispatch => {
+  try {
+    const res = await axios.delete(`http://localhost:3001/dogs?id=${id}`);
+    return dispatch({ type: "DOG_DELETE" });
+  } catch (e) {
+    console.log(e);
+    // return dispatch({ type: "SET_ERROR" });
+  }
+};
+
 export const getFiltered = payload => {
   return { type: "GET_FILTERED", payload };
 };

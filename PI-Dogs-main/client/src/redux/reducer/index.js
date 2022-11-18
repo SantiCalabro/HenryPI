@@ -74,6 +74,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         filteredDogs: [],
       };
+    case "DOG_UPDATE":
+      return {
+        ...state,
+        showDogs: [...state.showDogs, action.payload],
+      };
+    case "DOG_DELETE":
+      return {
+        ...state,
+        showDogs: [state.showDogs],
+      };
     default:
       return state;
   }

@@ -138,4 +138,69 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/", async (req, res) => {
+  let { id } = req.query;
+  let {
+    name,
+    image,
+    minHeight,
+    maxHeight,
+    minWeight,
+    maxWeight,
+    minYearsOfLife,
+    maxYearsOfLife,
+    breedGroup,
+    temperaments,
+  } = req.body;
+
+  if (
+    !name ||
+    !minHeight ||
+    !maxHeight ||
+    !minWeight ||
+    !maxWeight ||
+    !breedGroup ||
+    !temperaments
+  ) {
+    res.status(400).json("Faltan datos");
+  } else {
+    try {
+      let dogId = await Raza.findByPk(id);
+      console.log(dogId);
+      await dogId.update({
+        name,
+        minHeight,
+        maxHeight,
+        minWeight,
+        maxWeight,
+        minYearsOfLife,
+        maxYearsOfLife,
+        breedGroup,
+        image,
+      });
+
+      res.status(200).json(dogId);
+    } catch (e) {
+      res.status(400).json("Something went wrong" + e);
+    }
+  }
+});
+
+router.delete("/", async (req, res) => {
+  let { id } = req.query;
+
+  try {
+    let dogId = await Raza.findByPk(id);
+    await dogId.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).json("Dog successfully deleted");
+  } catch (e) {
+    res.status(400).json("Something went wrong" + e);
+  }
+});
+
 module.exports = router;
