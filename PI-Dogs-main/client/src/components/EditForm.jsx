@@ -18,6 +18,7 @@ export default function EditForm(props) {
   const id = dogDetail[0].id;
   const temperaments = useSelector(state => state.showTemperaments);
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   const dispatch = useDispatch();
   const breedNames = Object.values(breeds).map(el => el.name);
   const select = new Set(breedNames);
@@ -63,10 +64,28 @@ export default function EditForm(props) {
   }, []);
 
   function setTemp(e) {
-    setClicks(clicks + 1);
-
-    if (clicks > 2) {
-      lang === "English"
+    const select = input.temperaments.find(el => el === e.target.innerText);
+    if (select) {
+      setClicks(clicks - 1);
+      setInput({
+        ...input,
+        temperaments: input.temperaments.filter(
+          el => !el.includes(e.target.innerText)
+        ),
+      });
+      if (clicks < 4) {
+        ENG
+          ? setError({
+              ...error,
+              temperament: "",
+            })
+          : setError({
+              ...error,
+              temperament: "",
+            });
+      }
+    } else if (input.temperaments.length === 3 && clicks === 3) {
+      ENG
         ? setError({
             ...error,
             temperament: "*You can't select more than three temperaments",
@@ -75,8 +94,17 @@ export default function EditForm(props) {
             ...error,
             temperament: "*No puedes seleccionar más de tres temperamentos",
           });
-    }
-    if (input.temperaments.length < 3) {
+    } else if (!select && input.temperaments.length < 3) {
+      setClicks(clicks + 1);
+      ENG
+        ? setError({
+            ...error,
+            temperament: "",
+          })
+        : setError({
+            ...error,
+            temperament: "",
+          });
       handleChange(e);
       setInput({
         ...input,
@@ -106,52 +134,52 @@ export default function EditForm(props) {
       /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/;
 
     if (!input.name) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Ups! Name is required")
         : (errors.name = "*Ups! Se requiere nombre");
     } else if (!regexName.test(input.name)) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Name is invalid")
         : (errors.name = "*El nombre es inválido");
     } else if (taken) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Ups! This name already exists")
         : (errors.name = "*Ups! Ese nombre ya existe");
     }
 
     if (!input.image) {
-      lang === "English"
+      ENG
         ? (errors.image = "*Image is required")
         : (errors.image = "*Se requiere imagen");
     } else if (!regexUrl.test(input.image)) {
-      lang === "English"
+      ENG
         ? (errors.image = "*It must be an URL")
         : (errors.image = "*Debe ser una URL");
     }
 
     if (!input.minHeight || !input.maxHeight) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Height is required")
         : (errors.height = "*Se requiere altura");
     } else if (input.minHeight < 0 || input.maxHeight < 0) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Height must be a positive number")
         : (errors.height = "*La altura debe ser un número positivo");
     } else if (
       Number(input.minHeight) > Number(input.maxHeight) ||
       Number(input.minHeight) === Number(input.maxHeight)
     ) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Max height must be bigger")
         : (errors.height = "*La altura máxima debe ser mayor");
     }
 
     if (!input.minWeight || !input.maxWeight) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Weight is required")
         : (errors.weight = "*Se requiere peso");
     } else if (input.minWeight < 0 || input.maxWeight < 0) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Weight must be a positive number")
         : (errors.weight = "*El peso debe ser un número positivo");
     }
@@ -160,24 +188,24 @@ export default function EditForm(props) {
       Number(input.maxWeight) < Number(input.minWeight) ||
       Number(input.minWeight) === Number(input.maxWeight)
     ) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Max Weight must be bigger")
         : (errors.weight = "*El peso máximo debe ser mayor");
     }
 
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life are required")
         : (errors.yearsOfLife = "*Completá los años de vida");
     } else if (input.minYearsOfLife < 0 || input.maxYearsOfLife < 0) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life must be a positive number")
         : (errors.yearsOfLife = "*Los años deben ser números positivos");
     } else if (
       Number(input.minYearsOfLife) > Number(input.maxYearsOfLife) ||
       Number(input.minYearsOfLife) === Number(input.maxYearsOfLife)
     ) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Max years of life must be bigger")
         : (errors.yearsOfLife = "*El año máximo debe ser mayor");
     }
@@ -185,12 +213,12 @@ export default function EditForm(props) {
       Number(input.minYearsOfLife) !== parseInt(input.minYearsOfLife, 10) ||
       Number(input.maxYearsOfLife) !== parseInt(input.maxYearsOfLife, 10)
     ) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life must be an integer number")
         : (errors.yearsOfLife = "*Los años deben ser números enteros");
     }
     if (!input.temperaments.length) {
-      lang === "English"
+      ENG
         ? (errors.temperament = "*Choose at least one temperament")
         : (errors.temperament = "*Elige al menos un temperamento");
     }
@@ -261,7 +289,9 @@ export default function EditForm(props) {
       )}
 
       <div className={EF.formContainer}>
-        <h1 className={EF.title}>Edit {props.name}</h1>
+        <h1 className={EF.title}>
+          {ENG ? "Edit " : "Edita a "} {props.name}
+        </h1>
         <form onSubmit={e => handleSubmit(e)} autoComplete="off">
           <div className={EF.data}>
             <div className={EF.NameAndBreed}>
@@ -283,7 +313,7 @@ export default function EditForm(props) {
               </div>
 
               <div className={EF.BreedCont}>
-                <label>Breed</label>
+                <label>{ENG ? "Breed" : "Raza"}</label>
                 <select
                   style={{ width: "150px", marginLeft: "10px" }}
                   id="breedGroup"
@@ -303,11 +333,7 @@ export default function EditForm(props) {
             </div>
 
             <div className={EF.yearsContainer}>
-              {lang === "English" ? (
-                <h4>Years of life</h4>
-              ) : (
-                <h4>Años de vida</h4>
-              )}
+              <h4>{ENG ? "Years of life" : "Años de vida"}</h4>
               <div className={EF.values}>
                 <label>Min.</label>
                 <input
@@ -337,11 +363,7 @@ export default function EditForm(props) {
               )}
             </div>
             <div className={EF.weightContainer}>
-              {lang === "English" ? (
-                <h4>Average weight</h4>
-              ) : (
-                <h4>Peso promedio</h4>
-              )}
+              <h4>{ENG ? "Average weight" : "Peso promedio"}</h4>
               <label>Min.</label>
               <input
                 type="number"
@@ -369,11 +391,7 @@ export default function EditForm(props) {
               )}
             </div>
             <div className={EF.heightContainer}>
-              {lang === "English" ? (
-                <h4>Average height</h4>
-              ) : (
-                <h4>Altura promedio</h4>
-              )}
+              <h4>{ENG ? "Average height" : "Altura promedio"}</h4>
               <label>Min.</label>
               <input
                 type="number"
@@ -399,11 +417,7 @@ export default function EditForm(props) {
               )}
             </div>
             <div className={EF.url}>
-              {lang === "English" ? (
-                <h4>Upload an image</h4>
-              ) : (
-                <h4>Carga una imagen</h4>
-              )}
+              <h4>{ENG ? "Upload an image" : "Carga una imagen"}</h4>
               <input
                 id="image"
                 type="text"
@@ -418,11 +432,13 @@ export default function EditForm(props) {
               )}
             </div>
           </div>
-          {lang === "English" ? (
-            <label className={EF.label}>Choose up to three temperaments</label>
-          ) : (
-            <label className={EF.label}>Elige hasta tres temperamentos</label>
-          )}
+
+          <label className={EF.label}>
+            {ENG
+              ? "Choose up to three temperaments"
+              : "Elije hasta tres temperamentos"}
+          </label>
+
           <div className={EF.tempContainer}>
             {!error.temperament ? null : (
               <span className={EF.errorTemp}>{error.temperament}</span>
@@ -450,23 +466,14 @@ export default function EditForm(props) {
               </div>
             </div>
           </div>
-          {lang === "Englis" ? (
-            <button
-              type="submit"
-              className={disable.submit === true ? EF.submitBtn : EF.btnActive}
-              disabled={disable.submit}
-            >
-              Create your dog!
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className={disable.submit === true ? EF.submitBtn : EF.btnActive}
-              disabled={disable.submit}
-            >
-              Update your dog!
-            </button>
-          )}
+
+          <button
+            type="submit"
+            className={disable.submit === true ? EF.submitBtn : EF.btnActive}
+            disabled={disable.submit}
+          >
+            {ENG ? "Create your dog!" : "Crea tu perro!"}
+          </button>
         </form>
       </div>
     </div>

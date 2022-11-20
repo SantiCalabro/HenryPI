@@ -13,11 +13,13 @@ import deleteIcon from "../statics/delete.png";
 import confirm from "../statics/confirm.jpg";
 import success from "../statics/successDelete.jpg";
 import { Link } from "react-router-dom";
+import SimilarDogs from "../components/SimilarDogs";
 export default function DogDetail(props) {
   const dispatch = useDispatch();
   const dog = useSelector(state => state.dogDetail);
   const err = useSelector(state => state.error);
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   const id = props.match.params.idRaza;
 
   const [active, setActive] = useState({
@@ -29,7 +31,6 @@ export default function DogDetail(props) {
   });
 
   function setMsg(e) {
-    console.log(e.target.id);
     if (e.target.id === "edit") {
       setActive({ ...active, edit: true, filter: true });
     }
@@ -51,6 +52,12 @@ export default function DogDetail(props) {
   React.useEffect(() => {
     dispatch(clearDetail());
     dispatch(showDetail(id));
+  }, [id]);
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(clearDetail());
+    };
   }, []);
 
   return (
@@ -62,10 +69,14 @@ export default function DogDetail(props) {
           {active.success && (
             <div className={D.confirmCont}>
               <Link to="/created">
-                <h4 className={D.createdBtn}>Go to created dogs</h4>
+                <h4 className={D.createdBtn}>
+                  {ENG ? "Go to created dogs" : "Ir a perros creados"}
+                </h4>
               </Link>
               <Link to="/create">
-                <h4 className={D.createBtn}>Create another dog</h4>
+                <h4 className={D.createBtn}>
+                  {ENG ? "Create another dog" : "Crear otro perro"}
+                </h4>
               </Link>
 
               <img className={D.confirmImg} src={success} alt="" />
@@ -73,9 +84,11 @@ export default function DogDetail(props) {
           )}
           {active.msg && (
             <div className={D.confirmCont}>
-              <h1 className={D.ConfirmTitle}>Are you sure?</h1>
+              <h1 className={D.ConfirmTitle}>
+                {ENG ? "Are you sure?" : "Estás seguro?"}
+              </h1>
               <h4 id="yes" onClick={e => setMsg(e)} className={D.yes}>
-                Yes
+                {ENG ? "Yes" : "Sí"}
               </h4>
               <h4 id="no" onClick={e => setMsg(e)} className={D.no}>
                 No
@@ -129,11 +142,10 @@ export default function DogDetail(props) {
                     />
                   </div>
                   <div className={D.tempContainer}>
-                    {lang === "English" ? (
-                      <h4 className={D.tempTitle}>Temperament</h4>
-                    ) : (
-                      <h4 className={D.tempTitleEsp}>Temperamento</h4>
-                    )}
+                    <h4 className={D.tempTitle}>
+                      {ENG ? "Temperament" : "Temperamento"}
+                    </h4>
+
                     <div className={D.hashtags}>
                       <p className={D.temperament}>
                         {typeof el.temperaments[0] === "string"
@@ -157,97 +169,108 @@ export default function DogDetail(props) {
                       <span className={D.breed}>{el.breedGroup}</span>
                     ) : (
                       <span className={D.breed}>
-                        {lang === "English"
-                          ? " Unknown breed"
-                          : "Raza desconocida"}
+                        {ENG ? " Unknown breed" : "Raza desconocida"}
                       </span>
                     )}
                   </div>
-                  {lang === "English" ? (
-                    <>
-                      {typeof el.id === "string" && (
-                        <>
-                          <div className={D.btnContainer}>
-                            <label
-                              id="edit"
-                              className={D.editCont}
-                              onClick={e => setMsg(e)}
-                            >
-                              {" "}
-                              <img className={D.editBtn} src={editBtn} alt="" />
-                              Edit dog
-                            </label>
 
-                            <label
-                              id="delete"
-                              onClick={e => setMsg(e)}
-                              className={D.deleteCont}
-                            >
-                              <img
-                                className={D.deleteIcon}
-                                src={deleteIcon}
-                                alt=""
-                              />
-                              Delete
-                            </label>
-                          </div>
-                        </>
+                  <>
+                    {typeof el.id === "string" && (
+                      <>
+                        <div className={D.btnContainer}>
+                          <label
+                            id="edit"
+                            className={D.editCont}
+                            onClick={e => setMsg(e)}
+                          >
+                            <img className={D.editBtn} src={editBtn} alt="" />
+                            {ENG ? "Edit dog" : "Editar perro"}
+                          </label>
+
+                          <label
+                            id="delete"
+                            onClick={e => setMsg(e)}
+                            className={D.deleteCont}
+                          >
+                            <img
+                              className={D.deleteIcon}
+                              src={deleteIcon}
+                              alt=""
+                            />
+                            {ENG ? "Delete" : "Eliminar"}
+                          </label>
+                        </div>
+                      </>
+                    )}
+                    <p className={D.name}>{el.name}</p>
+
+                    <h4 className={D.averages}>
+                      {ENG ? "Averages" : "Promedios"}
+                    </h4>
+                    <div className={D.yearsCont}>
+                      <p className={D.yearsTitle}>
+                        {ENG ? "Years of life:" : "Años de vida:"}
+                      </p>
+                      {ENG ? (
+                        <p className={D.years}>
+                          {el.minYearsOfLife && el.maxYearsOfLife
+                            ? el.minYearsOfLife +
+                              "-" +
+                              el.maxYearsOfLife +
+                              " years"
+                            : el.minYearsOfLife + " years"}
+                        </p>
+                      ) : (
+                        <p className={D.years}>
+                          {el.minYearsOfLife && el.maxYearsOfLife
+                            ? el.minYearsOfLife +
+                              "-" +
+                              el.maxYearsOfLife +
+                              " años"
+                            : el.minYearsOfLife + " años"}
+                        </p>
                       )}
-                      <p className={D.name}>{el.name}</p>
-
-                      <h4 className={D.averages}>Averages</h4>
-                      <p className={D.yearsTitle}>Years of life:</p>
-                      <p className={D.years}>
-                        {el.minYearsOfLife && el.maxYearsOfLife
-                          ? el.minYearsOfLife +
-                            "-" +
-                            el.maxYearsOfLife +
-                            " years"
-                          : el.minYearsOfLife + " years"}
+                    </div>
+                    <div className={ENG ? D.weightCont : D.weightContEsp}>
+                      <p className={D.weightTitle}>
+                        {ENG ? "Weight:" : "Peso:"}
                       </p>
-                      <p className={D.weightTitle}>Weight:</p>
-                      <p className={D.weight}>
-                        {el.minWeight && el.maxWeight
-                          ? el.minWeight + "-" + el.maxWeight + " pounds"
-                          : el.minWeight + " pounds"}
+                      {ENG ? (
+                        <p className={D.weight}>
+                          {el.minWeight && el.maxWeight
+                            ? el.minWeight + "-" + el.maxWeight + " pounds"
+                            : el.minWeight + " pounds"}
+                        </p>
+                      ) : (
+                        <p className={D.weight}>
+                          {el.minWeight && el.maxWeight
+                            ? el.minWeight + "-" + el.maxWeight + " libras"
+                            : el.minWeight + " libras"}
+                        </p>
+                      )}
+                    </div>
+                    <div className={D.heightCont}>
+                      <p className={D.heightTitle}>
+                        {ENG ? "Height:" : "Altura:"}
                       </p>
-
-                      <p className={D.heightTitle}>Height:</p>
-                      <p className={D.height}>
-                        {el.minHeight && el.maxHeight
-                          ? el.minHeight + "-" + el.maxHeight + " feet"
-                          : el.minHeight + " feet"}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p className={D.name}>{el.name}</p>
-
-                      <h4 className={D.averages}>Promedios</h4>
-                      <p className={D.yearsTitle}>Años de vida:</p>
-                      <p className={D.yearsEsp}>
-                        {el.minYearsOfLife && el.maxYearsOfLife
-                          ? el.minYearsOfLife +
-                            "-" +
-                            el.maxYearsOfLife +
-                            " años"
-                          : el.minYearsOfLife + " años"}
-                      </p>
-                      <p className={D.weightTitle}>Peso:</p>
-                      <p className={D.weightEsp}>
-                        {el.minWeight && el.maxWeight
-                          ? el.minWeight + "-" + el.maxWeight + " libras"
-                          : el.minWeight + " libras"}
-                      </p>
-
-                      <p className={D.heightTitle}>Altura:</p>
-                      <p className={D.heightEsp}>
-                        {el.minHeight && el.maxHeight
-                          ? el.minHeight + "-" + el.maxHeight + " pies"
-                          : el.minHeight + " pies"}
-                      </p>
-                    </>
-                  )}
+                      {ENG ? (
+                        <p className={D.height}>
+                          {el.minHeight && el.maxHeight
+                            ? el.minHeight + "-" + el.maxHeight + " feet"
+                            : el.minHeight + " feet"}
+                        </p>
+                      ) : (
+                        <p className={D.height}>
+                          {el.minHeight && el.maxHeight
+                            ? el.minHeight + "-" + el.maxHeight + " pies"
+                            : el.minHeight + " pies"}
+                        </p>
+                      )}
+                    </div>
+                    <div className={D.similarContainer}>
+                      <SimilarDogs breed={el.breedGroup} id={id} />
+                    </div>
+                  </>
                 </div>
               ))
             ) : (

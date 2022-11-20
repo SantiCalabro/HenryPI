@@ -26,6 +26,7 @@ export default function Home() {
   const lang = useSelector(state => state.language);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(false);
+  const ENG = lang === "English";
 
   React.useEffect(() => {
     dispatch(showDogs());
@@ -69,7 +70,7 @@ export default function Home() {
             className={active === true ? H.hidden : H.globe}
             onClick={() => handleClick()}
           >
-            {lang === "English" ? (
+            {ENG ? (
               <h3 className={active === true ? H.hidden : H.globeMsg}>
                 Click me!
               </h3>

@@ -15,12 +15,14 @@
   }
   .sentence{
       z-index: 710;
-      position: absolute;
       color:#fff;
       font-weight: 600;
-      margin-top: 590px;
-      left:610px;
       font-size: 20px;
   }
 
-  
+  .container{
+    position: absolute;
+    margin-top:600px;
+    width:100%;
+    display : flex;
+}

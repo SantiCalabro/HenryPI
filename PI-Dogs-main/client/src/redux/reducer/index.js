@@ -1,3 +1,19 @@
+import {
+  SHOW_DOGS,
+  SHOW_DETAIL,
+  SHOW_TEMPS,
+  SHOW_BREEDS,
+  POST_DOG,
+  SET_ERROR,
+  GET_CREATED,
+  DOG_UPDATE,
+  DOG_DELETE,
+  GET_FILTERED,
+  CLEAR_DETAIL,
+  CLEAR_FILTER,
+  SET_LANGUAGE,
+} from "../actions/index";
+
 const initialState = {
   showDogs: [],
   filteredDogs: [],
@@ -11,75 +27,75 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "SHOW_DOGS":
+    case SHOW_DOGS:
       return {
         ...state,
         showDogs: action.payload,
       };
-    case "SHOW_DETAIL":
+    case SHOW_DETAIL:
       return {
         ...state,
         dogDetail: action.payload,
       };
-    case "SHOW_BREEDS":
+    case SHOW_BREEDS:
       return {
         ...state,
         showBreeds: action.payload,
       };
-    case "SET_LANGUAGE":
+    case SET_LANGUAGE:
       return {
         ...state,
         language: action.payload,
       };
-    case "SHOW_TEMPS":
+    case SHOW_TEMPS:
       return {
         ...state,
         showTemperaments: action.payload,
       };
-    case "SET_ERROR":
+    case SET_ERROR:
       return {
         ...state,
         error: "error",
       };
-    case "GET_FILTERED":
+    case GET_FILTERED:
       return {
         ...state,
         filteredDogs: action.payload,
       };
 
-    case "GET_CREATED":
+    case GET_CREATED:
       return {
         ...state,
         created: action.payload,
       };
 
-    case "CREATE_DOG":
-      return {
-        ...state,
-        showDogs: [...state.showDogs, ...action.payload],
-      };
-
-    case "CLEAR_DOGS":
-      return {
-        ...state,
-        showDogs: [],
-      };
-    case "CLEAR_DETAIL":
-      return {
-        ...state,
-        dogDetail: [],
-      };
-    case "CLEAR_FILTER":
-      return {
-        ...state,
-        filteredDogs: [],
-      };
-    case "DOG_UPDATE":
+    case POST_DOG:
       return {
         ...state,
         showDogs: [...state.showDogs, action.payload],
       };
-    case "DOG_DELETE":
+
+    case DOG_DELETE:
+      return {
+        ...state,
+        showDogs: [],
+      };
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        dogDetail: [],
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filteredDogs: [],
+      };
+    case DOG_UPDATE:
+      return {
+        ...state,
+        showDogs: [...state.showDogs, action.payload],
+      };
+    case DOG_DELETE:
       return {
         ...state,
         showDogs: [state.showDogs],

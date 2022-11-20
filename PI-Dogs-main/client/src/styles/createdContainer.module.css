@@ -3,42 +3,34 @@
   width: 100%;
   display: flex;
 }
-.title, .subtitle {
-    position: absolute;
-    right: 920px;
-    z-index: 500;
-    color: #fff;
+.titleContainer{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  top: 140px;
+  right: 900px;
+  z-index: 501;
+  color: #fff;
 }
-.subtitle{
-    font-size: 20px;
-    left: 80px;
-    z-index: 501;
-    margin-top: 180px;
+
+.subtitleContainer{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  top: 140px;
+  right: 900px;
+  z-index: 502;
+  color: #fff;
 }
 
 .title{
   font-size: 30px;
-  z-index: 501;
-  margin-top: 130px;
+  color: #fff;
 }
 
-.subtitleEsp{
-position: absolute;
-margin-top: 180px;
-margin-left: 30px;
-color: #fff;
-left: 20px;
-z-index: 501;
-font-size: 20px;
-}
-.titleEsp{
-  position: absolute;
-  margin-top: 130px;
-  color: #fff;
-  left: 50px;
-  z-index: 501;
-  font-size: 28px;
-}
+
 .pic{
   width: 65%;
   position: absolute;

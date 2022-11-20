@@ -11,6 +11,7 @@ export default function Form() {
   const dogs = useSelector(state => state.showDogs);
   const temperaments = useSelector(state => state.showTemperaments);
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   const dispatch = useDispatch();
   const breedNames = Object.values(breeds).map(el => el.name);
   const select = new Set(breedNames);
@@ -64,7 +65,7 @@ export default function Form() {
         ),
       });
       if (clicks < 4) {
-        lang === "English"
+        ENG
           ? setError({
               ...error,
               temperament: "",
@@ -75,7 +76,7 @@ export default function Form() {
             });
       }
     } else if (input.temperaments.length === 3 && clicks === 3) {
-      lang === "English"
+      ENG
         ? setError({
             ...error,
             temperament: "*You can't select more than three temperaments",
@@ -86,7 +87,7 @@ export default function Form() {
           });
     } else if (!select && input.temperaments.length < 3) {
       setClicks(clicks + 1);
-      lang === "English"
+      ENG
         ? setError({
             ...error,
             temperament: "",
@@ -118,59 +119,58 @@ export default function Form() {
 
   function validate(input) {
     const taken = dogs.find(el => el.name === input.name);
-    console.log(taken);
     const errors = {};
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     const regexUrl =
       /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/;
 
     if (!input.name) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Ups! Name is required")
         : (errors.name = "*Ups! Se requiere nombre");
     } else if (!regexName.test(input.name)) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Name is invalid")
         : (errors.name = "*El nombre es inválido");
     } else if (taken) {
-      lang === "English"
+      ENG
         ? (errors.name = "*Ups! This name already exists")
         : (errors.name = "*Ups! Ese nombre ya existe");
     }
 
     if (!input.image) {
-      lang === "English"
+      ENG
         ? (errors.image = "*Image is required")
         : (errors.image = "*Se requiere imagen");
     } else if (!regexUrl.test(input.image)) {
-      lang === "English"
+      ENG
         ? (errors.image = "*It must be an URL")
         : (errors.image = "*Debe ser una URL");
     }
 
     if (!input.minHeight || !input.maxHeight) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Height is required")
         : (errors.height = "*Se requiere altura");
     } else if (input.minHeight < 0 || input.maxHeight < 0) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Height must be a positive number")
         : (errors.height = "*La altura debe ser un número positivo");
     } else if (
       Number(input.minHeight) > Number(input.maxHeight) ||
       Number(input.minHeight) === Number(input.maxHeight)
     ) {
-      lang === "English"
+      ENG
         ? (errors.height = "*Max height must be bigger")
         : (errors.height = "*La altura máxima debe ser mayor");
     }
 
     if (!input.minWeight || !input.maxWeight) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Weight is required")
         : (errors.weight = "*Se requiere peso");
     } else if (input.minWeight < 0 || input.maxWeight < 0) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Weight must be a positive number")
         : (errors.weight = "*El peso debe ser un número positivo");
     }
@@ -179,24 +179,28 @@ export default function Form() {
       Number(input.maxWeight) < Number(input.minWeight) ||
       Number(input.minWeight) === Number(input.maxWeight)
     ) {
-      lang === "English"
+      ENG
         ? (errors.weight = "*Max Weight must be bigger")
         : (errors.weight = "*El peso máximo debe ser mayor");
     }
 
     if (!input.minYearsOfLife || !input.maxYearsOfLife) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life are required")
         : (errors.yearsOfLife = "*Completá los años de vida");
     } else if (input.minYearsOfLife < 0 || input.maxYearsOfLife < 0) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life must be a positive number")
         : (errors.yearsOfLife = "*Los años deben ser números positivos");
+    } else if (input.minYearsOfLife > 25 || input.maxYearsOfLife > 25) {
+      ENG
+        ? (errors.yearsOfLife = "*No dog lives more than 25 years :(")
+        : (errors.yearsOfLife = "*Los perros no viven más de 25 años :(");
     } else if (
       Number(input.minYearsOfLife) > Number(input.maxYearsOfLife) ||
       Number(input.minYearsOfLife) === Number(input.maxYearsOfLife)
     ) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Max years of life must be bigger")
         : (errors.yearsOfLife = "*El año máximo debe ser mayor");
     }
@@ -204,12 +208,12 @@ export default function Form() {
       Number(input.minYearsOfLife) !== parseInt(input.minYearsOfLife, 10) ||
       Number(input.maxYearsOfLife) !== parseInt(input.maxYearsOfLife, 10)
     ) {
-      lang === "English"
+      ENG
         ? (errors.yearsOfLife = "*Years of life must be an integer number")
         : (errors.yearsOfLife = "*Los años deben ser números enteros");
     }
     if (!input.temperaments.length) {
-      lang === "English"
+      ENG
         ? (errors.temperament = "*Choose at least one temperament")
         : (errors.temperament = "*Elige al menos un temperamento");
     }
@@ -288,7 +292,7 @@ export default function Form() {
                 name="name"
                 onChange={e => handleChange(e)}
                 onBlur={e => handleValidate(e)}
-                placeholder={lang === "English" ? "Name" : "Nombre"}
+                placeholder={ENG ? "Name" : "Nombre"}
                 className={F.name}
               />
               {!error.name ? null : (
@@ -299,7 +303,7 @@ export default function Form() {
             </div>
 
             <div className={F.BreedCont}>
-              <label>Breed</label>
+              <label>{ENG ? "Breed" : "Raza"}</label>
               <select
                 id="breedGroup"
                 name="breedGroup"
@@ -318,11 +322,8 @@ export default function Form() {
           </div>
 
           <div className={F.yearsContainer}>
-            {lang === "English" ? (
-              <h4>Years of life</h4>
-            ) : (
-              <h4>Años de vida</h4>
-            )}
+            <h4>{ENG ? "Years of life" : "Años de vida"}</h4>
+
             <div className={F.values}>
               <label>Min.</label>
               <input
@@ -348,11 +349,8 @@ export default function Form() {
             )}
           </div>
           <div className={F.weightContainer}>
-            {lang === "English" ? (
-              <h4>Average weight</h4>
-            ) : (
-              <h4>Peso promedio</h4>
-            )}
+            <h4>{ENG ? "Average weight" : "Peso promedio"}</h4>
+
             <label>Min.</label>
             <input
               type="number"
@@ -376,11 +374,8 @@ export default function Form() {
             )}
           </div>
           <div className={F.heightContainer}>
-            {lang === "English" ? (
-              <h4>Average height</h4>
-            ) : (
-              <h4>Altura promedio</h4>
-            )}
+            <h4>{ENG ? "Average height" : "Peso promedio"}</h4>
+
             <label>Min.</label>
             <input
               type="number"
@@ -404,11 +399,8 @@ export default function Form() {
             )}
           </div>
           <div className={F.url}>
-            {lang === "English" ? (
-              <h4>Upload an image</h4>
-            ) : (
-              <h4>Carga una imagen</h4>
-            )}
+            <h4>{ENG ? "Upload an image" : "Carga una imagen"}</h4>
+
             <input
               id="image"
               type="text"
@@ -422,11 +414,13 @@ export default function Form() {
               <span className={F.errorUrl}>{error.image}</span>
             )}
           </div>
-          {lang === "English" ? (
-            <label className={F.label}>Choose up to three temperaments</label>
-          ) : (
-            <label className={F.label}>Elige hasta tres temperamentos</label>
-          )}
+
+          <label className={F.label}>
+            {ENG
+              ? "Choose up to three temperaments"
+              : "Elige hasta tres temperamentos"}
+          </label>
+
           <div className={F.tempContainer}>
             {!error.temperament ? null : (
               <span className={F.errorTemp}>{error.temperament}</span>
@@ -455,23 +449,14 @@ export default function Form() {
               </div>
             </div>
           </div>
-          {lang === "Englis" ? (
-            <button
-              type="submit"
-              className={disable.submit === true ? F.submitBtn : F.btnActive}
-              disabled={disable.submit}
-            >
-              Create your dog!
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className={disable.submit === true ? F.submitBtn : F.btnActive}
-              disabled={disable.submit}
-            >
-              Crea tu perro!
-            </button>
-          )}
+
+          <button
+            type="submit"
+            className={disable.submit === true ? F.submitBtn : F.btnActive}
+            disabled={disable.submit}
+          >
+            {ENG ? "Create your dog!" : "Crea tu perro!"}
+          </button>
         </form>
       </div>
     </div>

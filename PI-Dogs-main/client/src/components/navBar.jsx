@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function NavBar() {
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   const dispatch = useDispatch();
 
   const setLang = e => {
@@ -23,22 +24,18 @@ export default function NavBar() {
 
         <ul className={N.btnContainer}>
           <Link to="/created" style={{ textDecoration: "none" }}>
-            {lang === "English" ? (
-              <li className={N.created}>Created dogs</li>
-            ) : (
-              <li className={N.created}>Perros creados</li>
-            )}
+            <li className={N.created}>
+              {ENG ? "Created dogs" : "Perros creados"}
+            </li>
           </Link>
           <Link to="/create" style={{ textDecoration: "none" }}>
-            {lang === "English" ? (
-              <li className={N.created}>Upload a dog</li>
-            ) : (
-              <li className={N.created}>Crea un perro</li>
-            )}
+            <li className={N.created}>
+              {ENG ? "Upload a dog" : "Crea un perro"}
+            </li>
           </Link>
         </ul>
         <li className={N.language} onClick={e => setLang(e)}>
-          {lang === "English" ? "Español" : "English"}
+          {ENG ? "Español" : "English"}
         </li>
 
         <div className={N.contact}>

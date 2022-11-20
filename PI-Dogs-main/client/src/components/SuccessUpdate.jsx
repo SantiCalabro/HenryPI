@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 export default function SuccessMessage() {
   const [active, setActive] = useState(false);
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
 
   const setHide = () => {
     setActive(true);
@@ -17,29 +18,19 @@ export default function SuccessMessage() {
     <>
       {active === false && (
         <div className={SU.container}>
-          {lang === "English" ? (
-            <>
-              <Link to="/created">
-                <p className={SU.createdBtn}>Visit your new friends</p>
-              </Link>
-              <Link to="/create">
-                <p onClick={() => setHide()} className={SU.btn}>
-                  Create other dog
-                </p>
-              </Link>{" "}
-            </>
-          ) : (
-            <>
-              <Link to="/created">
-                <p className={SU.createdBtn}>Visita a tus nuevos amigos</p>
-              </Link>
-              <Link to="/create">
-                <p onClick={() => setHide()} className={SU.btn}>
-                  Crea otro perro
-                </p>
-              </Link>{" "}
-            </>
-          )}
+          <>
+            <Link to="/created">
+              <p className={SU.createdBtn}>
+                {ENG ? "Visit your new friends" : "Visita a tus nuevos amigos"}
+              </p>
+            </Link>
+            <Link to="/create">
+              <p onClick={() => setHide()} className={SU.btn}>
+                {ENG ? "Create another dog" : "Crea otro perro"}
+              </p>
+            </Link>{" "}
+          </>
+
           <img className={SU.pic} src={successPic} alt="" />
           <div className={SU.full}></div>
         </div>

@@ -8,20 +8,19 @@ import { useSelector } from "react-redux";
 
 export default function Error() {
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   return (
     <div>
       <img src={errorBowl} className={E.errorBowl} alt="" />
-      {lang === "English" ? (
-        <p className={E.sentence}>Seems you're lost!</p>
-      ) : (
-        <p className={E.sentence}>Parece que te perdiste!</p>
-      )}
+      <div className={E.container}>
+        <p className={E.sentence}>
+          {ENG ? "Seems you're lost!" : "Parece que te perdiste!"}
+        </p>
+      </div>
       <Link to="/home">
-        {lang === "English" ? (
-          <span className={E.button}>Return to the ship</span>
-        ) : (
-          <span className={E.button}>Regresa a la nave</span>
-        )}
+        <span className={E.button}>
+          {ENG ? "Return to the ship" : " Regresa a la nave"}
+        </span>
       </Link>
       <div className={E.imgContainer}>
         <img className={E.ship} src={ship} alt="" />

@@ -6,40 +6,25 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function SuccessMessage() {
-  const [active, setActive] = useState(false);
   const lang = useSelector(state => state.language);
-
-  function reRender() {
-    setActive(true);
-  }
+  const ENG = lang === "English";
 
   return (
     <>
-      {active === false && (
-        <div className={S.container}>
-          {lang === "English" ? (
-            <>
-              <Link to="/created">
-                <p className={S.createdBtn}>Visit your new friends</p>
-              </Link>
-              <Link to="/home">
-                <p className={S.btn}>Return to the ship</p>
-              </Link>{" "}
-            </>
-          ) : (
-            <>
-              <Link to="/created">
-                <p className={S.createdBtn}>Visita a tus nuevos amigos</p>
-              </Link>
-              <Link to="/home">
-                <p className={S.btn}>Volver a la nave</p>
-              </Link>{" "}
-            </>
-          )}
-          <img className={S.pic} src={successPic} alt="" />
-          <div className={S.full}></div>
-        </div>
-      )}
+      <div className={S.btnCont}>
+        <Link to="/created">
+          <p className={S.createdBtn}>
+            {ENG ? "Visit your new friends" : "Visita a tus nuevos amigos"}
+          </p>
+        </Link>
+        <Link to="/home">
+          <p className={S.btn}>
+            {ENG ? "Return to the ship" : "Regresar a la nave"}
+          </p>
+        </Link>{" "}
+        <img className={S.pic} src={successPic} alt="" />
+        <div className={S.full}></div>
+      </div>
     </>
   );
 }

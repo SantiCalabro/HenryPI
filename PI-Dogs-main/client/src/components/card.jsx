@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 
 export default function Card(props) {
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
+
   return (
     <div>
       <Link to={`/detail/${props.id}`} style={{ textDecoration: "none" }}>
@@ -12,11 +14,9 @@ export default function Card(props) {
           <div className={CardStyle.imgContainer}>
             {typeof props.id === "string" && (
               <div>
-                {lang === "English" ? (
-                  <span className={CardStyle.label}>Created</span>
-                ) : (
-                  <span className={CardStyle.label}>Creado</span>
-                )}
+                <span className={CardStyle.label}>
+                  {ENG ? "Created" : "Creado"}
+                </span>
               </div>
             )}
             <img src={props.image} className={CardStyle.img} alt="" />
@@ -31,33 +31,21 @@ export default function Card(props) {
               </p>
             </div>
           </div>
-          {lang === "English" ? (
-            <>
-              {props.minYearsOfLife && props.maxYearsOfLife ? (
-                <p className={CardStyle.life}>
-                  Life expectancy: {props.minYearsOfLife} -{" "}
-                  {props.maxYearsOfLife} years
-                </p>
-              ) : (
-                <p className={CardStyle.life}>
-                  Life expectancy: {props.minYearsOfLife} years
-                </p>
-              )}
-            </>
-          ) : (
-            <>
-              {props.minYearsOfLife && props.maxYearsOfLife ? (
-                <p className={CardStyle.life}>
-                  Expectativa de vida: {props.minYearsOfLife} -{" "}
-                  {props.maxYearsOfLife} años
-                </p>
-              ) : (
-                <p className={CardStyle.life}>
-                  Expectativa de vida: {props.minYearsOfLife} años
-                </p>
-              )}
-            </>
-          )}
+
+          <>
+            {props.minYearsOfLife && props.maxYearsOfLife ? (
+              <p className={CardStyle.life}>
+                {ENG ? "Life expectancy: " : "Expectativa de vida: "}
+                {props.minYearsOfLife} - {props.maxYearsOfLife}
+                {ENG ? " years" : " años"}
+              </p>
+            ) : (
+              <p className={CardStyle.life}>
+                {ENG ? "Life expectancy: " : "Expectativa de vida: "}
+                {props.minYearsOfLife} {ENG ? " years" : " años"}
+              </p>
+            )}
+          </>
         </div>
       </Link>
     </div>

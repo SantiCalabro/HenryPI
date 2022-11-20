@@ -45,102 +45,93 @@
     color: #0E0040;
     position: absolute;
     margin-top: 120px;
-    left: 100px;
+    left: 105px;
     font-size: 20px;
+}
+
+
+.yearsCont{
+position: absolute;
+margin-top: 160px;
+left: 100px;
+display: flex;
+width: 210px;
+
 }
 .yearsTitle{
     color: #FA450F;
-    position: absolute;
-    margin-top:160px;
     font-weight: 600;
-    left: 100px;
     font-size: 18px;
-}
-.weightTitle{
-    color: #FA450F;
-    position: absolute;
-    margin-top: 220px;
-    font-weight: 600;
-    left: 100px;
-    font-size: 18px;
-}
-.heightTitle{
-    color: #FA450F;
-    position: absolute;
-    margin-top: 190px;
-    font-weight: 600;
-    left: 100px;
-    font-size: 18px;
-}
-.weight{
-
-    position: absolute;
-    color: #0E0040;
-    margin-top: 220px;
-    left: 175px;
-}
-.height{
-    position: absolute;
-    color: #0E0040;
-    margin-top: 190px;
-    left: 175px;
 }
 
 .years{
-    position: absolute;
     color: #0E0040;
-    margin-top:160px;
-    left: 215px;
 }
 
-.weightEsp{
 
+
+.heightCont{
     position: absolute;
-    color: #0E0040;
-    margin-top: 230px;
-    left: 160px;
+    margin-top: 185px;
+    left: 100px;
+    display: flex;
+    width: 150px;
 }
-.heightEsp{
-    position: absolute;
+.height{
     color: #0E0040;
-    margin-top: 205px;
-    left: 175px;
 }
 
-.yearsEsp{
-    position: absolute;
-    color: #0E0040;
-    margin-top:180px;
-    left: 230px;
+.heightTitle{
+    color: #FA450F;
+    font-weight: 600;
+    font-size: 18px;
 }
+
+.weightCont{
+    position: absolute;
+    margin-top: 210px;
+    left: 100px;
+    display: flex;
+    width: 180px;
+}
+.weightContEsp{
+    position: absolute;
+    margin-top: 210px;
+    left: 100px;
+    display: flex;
+    width: 145px;
+}
+
+
+.weightTitle{
+    color: #FA450F;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.weight{
+    color: #0E0040;
+}
+
 
 
 .tempContainer{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+    width:400px;
     position: absolute;
-    left: 10px;
-    bottom: 260px;
-
+    bottom: 300px; 
 }
 
 .tempTitle{
     color: #0E0040;
-    position: relative;
-    right: 230px;
+    position: absolute;
+    left: 100px;
 }
-.tempTitleEsp{
-    color: #0E0040;
-    position: relative;
-    right: 225px;
-}
+
 .temperament{
     position: absolute;
     color: #0E0040;
     top: 20px;
-    text-align: left;
-    left: 90px;
+    left: 100px;
 }
 .loadingContainer{
     position: absolute;
@@ -207,39 +198,38 @@ border: solid 1px red;
 .btnContainer{
     position: absolute;
     display: flex;
-    width: 250px;
-    left: 90px;
-    margin-top: 380px;
+    width: 240px;
+    left:320px;
+    margin-top: 75px;
 }
 
 .editBtn, .deleteIcon{
     cursor: pointer;
-    width: 20px;
+    width: 18px;
+    height: 18px;
    
 }
 .editCont, .deleteCont {
     display: flex;
     border: solid 1px #555;
-    padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: 600;
     color: #555;
     cursor: pointer;
-
+    font-size: 14px;
 }
 .deleteCont{
     display: flex;
-
 }
 
 .editCont label{
     margin-left: 5px;
     margin-top: 2px;
-  
-
 }
 
 .deleteCont label{

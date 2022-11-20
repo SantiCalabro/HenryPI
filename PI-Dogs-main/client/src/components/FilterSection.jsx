@@ -9,6 +9,7 @@ export default function FilterSection() {
   const dogs = useSelector(state => state.showDogs);
   const breeds = useSelector(state => state.showBreeds);
   const lang = useSelector(state => state.language);
+  const ENG = lang === "English";
   const filtrados = useSelector(state => state.filteredDogs);
   const temperaments = useSelector(state => state.showTemperaments);
   const dispatch = useDispatch();
@@ -47,13 +48,6 @@ export default function FilterSection() {
 
   function handleFilter(e) {
     dispatch(clearFilter());
-
-    // if (
-    //   e.target.value === "DEFAULT" ||
-    //   temp === "DEFAULT" ||
-    //   breed === "DEFAULT"
-    // ) {
-    //   dispatch(getFiltered(dogs));
 
     if (
       (e.target.id === "breed" && temp === "") ||
@@ -96,6 +90,9 @@ export default function FilterSection() {
       const filtered = dogs.filter(el => el.breedGroup == breed);
       dispatch(getFiltered(filtered));
     }
+    if (temp === "DEFAULT" && breed === "DEFAULT") {
+      dispatch(getFiltered(dogs));
+    }
   }, [breed, temp]);
 
   return (
@@ -114,7 +111,7 @@ export default function FilterSection() {
             className={F.tempSelector}
           >
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
-              {lang === "English" ? "  Breed Group" : "Raza"}
+              {ENG ? "  Breed Group" : "Raza"}
             </option>
             {unrepeated &&
               unrepeated.map(el => {
@@ -134,7 +131,7 @@ export default function FilterSection() {
             className={F.tempSelector}
           >
             <option value="DEFAULT" onChange={() => dispatch(showDogs())}>
-              {lang === "English" ? "Temperament" : "Temperamento"}
+              {ENG ? "Temperament" : "Temperamento"}
             </option>
             {temperaments &&
               temperaments.map(el => {
@@ -142,9 +139,7 @@ export default function FilterSection() {
               })}
           </select>
           <p className={F.orderTitle}>
-            {lang === "English"
-              ? "Order alphabetically "
-              : "Por orden alfabético"}{" "}
+            {ENG ? "Order alphabetically " : "Por orden alfabético"}{" "}
           </p>
           <div className={F.orderBtn}>
             <span className={F.order} onClick={e => handleSort(e)}>
